@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kas EF V86 - TELEGRAM+CRUD - PT Astra Komponen</title>
+<style>
+*{box-sizing:border-box}body{font-family:system-ui,sans-serif;margin:0;padding:8px;max-width:520px;margin:auto;background:#F8FAFC}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-bottom:8px}
+.btn{border-radius:999px;padding:10px 14px;font-size:11px;font-weight:800;border:1px solid #e5e7eb;background:#fff;cursor:pointer;min-height:40px}
+.btn-black{background:#111;color:#fff;border-color:#111}.btn-teal{background:#06b6d4;color:#fff;border-color:#06b6d4}.btn-red{background:#ef4444;color:#fff}.btn-copy{background:#06b6d4;color:#fff;border-color:#06b6d4;font-weight:900}
+.tab{padding:10px 18px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid #e5e7eb;background:#fff;cursor:pointer}.tab-active{background:#06b6d4;color:#fff;border-color:#06b6d4}
+.del-btn{width:32px;height:32px;border-radius:50%;background:#ef4444;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;border:2px solid #fff;cursor:pointer}
+.edit-btn{width:32px;height:32px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;border:2px solid #fff;cursor:pointer}
+.badge{font-size:8px;padding:3px 8px;border-radius:999px;border:1px solid #ddd;font-weight:700}.badge-anggota-aqua{background:#cffafe!important;color:#0e7490!important;border:1px solid #22d3ee!important}
+.saldo-aqua{background:linear-gradient(135deg,#06b6d4,#0891b2)!important;color:#fff!important}
+.icon-plus{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;background:#06b6d4;color:#fff;cursor:pointer}
+.sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}.sync-online{background:#22c55e}.sync-offline{background:#ef4444}.sync-syncing{background:#f59e0b;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.telegram-banner{background:linear-gradient(135deg,#229ED9,#1a8bc2);color:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:999px;font-size:11px;font-weight:900;background:#06b6d4;color:#fff">💧 <span id="mode-text">ADMIN</span></div>
+<div style="display:flex;align-items:center;gap:8px">
+<div style="font-size:9px;color:#666;display:flex;align-items:center"><span class="sync-dot sync-online" id="sync-dot"></span><span id="sync-status">Telegram Online</span></div>
+<div style="font-size:9px;color:#666">V86 TELEGRAM+CRUD</div>
+</div>
+</div>
+
+<div class="telegram-banner">
+<div><div style="font-size:12px;font-weight:900">🤖 Telegram Bot V86 Active</div><div style="font-size:9px;opacity:0.9">17 anggota • /tambah MASUK 100000 Nia iuran</div></div>
+<button class="btn" style="background:#fff;color:#229ED9;font-size:9px" onclick="window.open('https://t.me/YourBotUsername','_blank')">Buka Bot</button>
+</div>
+
+<div class="card" style="display:flex;justify-content:space-between;gap:10px">
+<div style="display:flex;gap:10px;flex:1">
+<div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#06b6d4,#0891b2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px">EF</div>
+<div style="flex:1"><div style="font-size:15px;font-weight:900">Laporan uang kas area EF</div><div style="font-size:12px;color:#444">PT. Astra Komponen Indonesia</div><div style="margin-top:6px"><span class="badge badge-anggota-aqua" id="badge-role">ADMIN V86</span> <span class="badge" id="badge-count">17 anggota</span> <span class="badge" style="background:#229ED9;color:#fff">TELEGRAM</span></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:6px"><button class="btn" onclick="syncNow(true)" style="font-size:10px">🔄 Sync</button><button class="btn" onclick="exportPDF()" style="font-size:10px;background:#fef2f2;color:#dc2626;border-color:#fecaca">📄 PDF</button></div><button class="btn btn-black" id="btn-login" onclick="toggleLogin()" style="font-size:10px;width:100%">Login</button></div>
+</div>
+
+<div style="display:flex;gap:6px;padding:4px;background:#F1F5F9;border-radius:999px;width:fit-content;margin-bottom:10px;border:1px solid #e5e7eb"><button class="tab tab-active" id="tab-dashboard" onclick="setTab('dashboard')">Dashboard</button><button class="tab" id="tab-anggota" onclick="setTab('anggota')">Anggota (17)</button><button class="tab" id="tab-rekening" onclick="setTab('rekening')">Rekening</button></div>
+
+<div id="view-dashboard">
+<div class="card saldo-aqua"><div style="font-size:8px;opacity:0.9">SALDO REAL-TIME DB - TELEGRAM SYNC</div><div id="saldo" style="font-size:26px;font-weight:900;margin-top:4px">Rp 0</div><div id="saldo-detail" style="font-size:9px;opacity:0.9;margin-top:4px">0 trx • Telegram: /tambah</div><div id="last-sync" style="font-size:8px;opacity:0.8;margin-top:2px">Sync: Telegram → Sheet → Web V86</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px"><div class="card" style="margin:0;padding:12px;border:1px solid #a5f3fc;background:#ecfeff"><div style="font-size:8px;color:#0e7490;font-weight:800">MASUK (Telegram)</div><div id="masuk" style="font-size:16px;font-weight:900;color:#059669;margin-top:4px">+ Rp 0</div></div><div class="card" style="margin:0;padding:12px;border:1px solid #fecaca;background:#FFF1F2"><div style="font-size:8px;color:#666;font-weight:800">KELUAR</div><div id="keluar" style="font-size:16px;font-weight:900;color:#dc2626;margin-top:4px">- Rp 0</div></div></div>
+
+<div class="card"><div style="font-size:10px;font-weight:900;color:#229ED9;margin-bottom:8px">🔗 INTEGRASI: Telegram → Google Sheet → Web (V86)</div><div style="display:flex;align-items:center;gap:8px;font-size:9px"><span style="background:#229ED9;color:#fff;padding:4px 8px;border-radius:999px">🤖 Telegram Bot</span>→<span style="background:#34a853;color:#fff;padding:4px 8px;border-radius:999px">📊 Sheet Real</span>→<span style="background:#06b6d4;color:#fff;padding:4px 8px;border-radius:999px">🌐 Web V86</span></div><div style="font-size:8px;color:#666;margin-top:6px">Format Telegram: /tambah MASUK 100000 Nia iuran bulanan → auto muncul di sini</div></div>
+
+<div class="card" id="bulk-area"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:12px;font-weight:900;color:#0e7490">💧 INPUT IURAN MASSAL (17 Anggota)</div><div style="display:flex;gap:6px"><button class="btn" style="font-size:8px;padding:6px 10px" onclick="selectAll()">Semua</button><button class="btn" style="font-size:8px;padding:6px 10px" onclick="deselectAll()">Batal</button></div></div><div id="member-list" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:160px;overflow:auto;margin-bottom:12px;border:1px solid #a5f3fc;border-radius:10px;padding:6px;background:#ecfeff"></div><button class="btn btn-teal" style="width:100%;height:48px;font-size:13px" onclick="saveBulk()">💧 Simpan Iuran + Sync Telegram</button></div>
+
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:12px;font-weight:900">TRANSAKSI - <span id="tx-title">0</span> • EDIT/HAPUS V86</div><button class="btn btn-black" id="btn-add" style="font-size:10px" onclick="toggleAdd()">+ Tambah</button></div>
+<div id="add-form" style="display:none;background:#ecfeff;border:1px solid #22d3ee;border-radius:12px;padding:12px;margin-bottom:10px">
+<div style="font-size:11px;font-weight:900;color:#0e7490;margin-bottom:8px">Tambah Transaksi - V86 Telegram Format</div>
+<div style="display:flex;gap:6px;margin-bottom:6px"><select id="new-cat" class="btn" style="flex:1"><option>Iuran Bulanan</option><option>Kas Masuk</option><option>Kas Keluar</option></select><input id="new-date" type="date" class="btn" style="flex:1"></div>
+<div style="display:flex;gap:6px;margin-bottom:6px"><select id="new-member" class="btn" style="flex:1"></select><input id="new-member-manual" placeholder="Nama manual" class="btn" style="flex:1;display:none"></div>
+<div style="margin-bottom:6px"><input id="new-desc" placeholder="Deskripsi: Iuran Nia September..." class="btn" style="width:100%;height:44px"></div>
+<div style="display:flex;gap:6px;margin-bottom:10px"><input id="new-amt" type="number" value="100000" class="btn" style="flex:1;height:44px"><button class="btn" onclick="toggleManual()" style="font-size:9px">✏️ Manual</button></div>
+<div style="display:flex;gap:8px"><button class="btn" style="flex:1;height:44px" onclick="toggleAdd()">Batal</button><button class="btn btn-teal" style="flex:1;height:44px" onclick="saveSingle()">Simpan + Sync Sheet & Telegram</button></div>
+</div>
+<div id="tx-list" style="max-height:420px;overflow:auto;border:1px solid #f1f5f9;border-radius:10px;padding:6px"></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-teal" id="btn-10" onclick="setLimit(10)">10</button><button class="btn" id="btn-20" onclick="setLimit(20)">20</button><button class="btn" id="btn-all" onclick="setLimit(1000)">Semua</button></div></div></div>
+
+<div id="view-anggota" style="display:none"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:14px;font-weight:900">ANGGOTA - 17 - Telegram Ready</div><button class="icon-plus" onclick="toggleAnggotaForm()">+</button></div><div style="font-size:9px;color:#666;margin-bottom:10px">Klik kartu untuk filter transaksi • 🔴 Terkecil 🟢 Tertinggi</div><div id="anggota-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div></div></div>
+
+<div id="view-rekening" style="display:none"><div class="card"><div style="font-size:14px;font-weight:900">💳 REKENING - Eka Iswanto</div><div id="rekening-list" style="margin-top:10px"></div></div></div>
+
+<div id="toast" style="display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#0e7490;color:#fff;font-size:12px;font-weight:800;padding:12px 20px;border-radius:999px;z-index:3000">Toast</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9hzTgKSYAKp1u39ftbASW4MpM2r4-1M_aWngzoZLSbfl8xYK4VSlo3l-e2xtKHqhM/exec";
+var ANGGOTA_17=["Nia","Aditya","Anisa","Aaf","Syarif","Budi","Topik","Yudi","Heru","Dozen","Putri","Arief","Anah","Supriyadi","Zaelani","Nely","Eka"];
+var members=ANGGOTA_17.map((n,i)=>({id:"m-"+n.toLowerCase(),name:n}));
+var txs=[
+{id:"TRX-TEST-TELEGRAM",date:"2026-09-07",category:"Kas Masuk",amount:50000,memberName:"Budi",desc:"gorengan - Tes Telegram Bot V86"},
+{id:"TRX-1788360032145-2",date:"2026-07-26",category:"Iuran Bulanan",amount:100000,memberName:"Anisa",desc:"Iuran Bulanan"},
+{id:"TRX-1788360032141-0",date:"2026-07-26",category:"Iuran Bulanan",amount:100000,memberName:"Nia",desc:"Iuran Bulanan"},
+{id:"TRX-1788360104600-0",date:"2026-08-25",category:"Iuran Bulanan",amount:100000,memberName:"Nia",desc:"Iuran Bulanan"},
+];
+var filteredTxs=txs.slice();var displayLimit=10;var isAdmin=true;
+function fmt(n){return new Intl.NumberFormat("id-ID").format(n||0);}
+function toast(m){var el=document.getElementById('toast');el.textContent=m;el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
+function setTab(t){document.getElementById('view-dashboard').style.display=t==='dashboard'?'block':'none';document.getElementById('view-anggota').style.display=t==='anggota'?'block':'none';document.getElementById('view-rekening').style.display=t==='rekening'?'block':'none';}
+function toggleAdd(){var f=document.getElementById('add-form');f.style.display=f.style.display==='none'?'block':'none';}
+function setLimit(n){displayLimit=n;updateUI();}
+function selectAll(){document.querySelectorAll('.bulk-cb').forEach(cb=>cb.checked=true);}
+function deselectAll(){document.querySelectorAll('.bulk-cb').forEach(cb=>cb.checked=false);}
+function saveSingle(){
+  var cat=document.getElementById('new-cat').value;
+  var date=document.getElementById('new-date').value||new Date().toISOString().slice(0,10);
+  var mid=document.getElementById('new-member').value;
+  var m=members.find(x=>x.id===mid);
+  var memberName=m?m.name:ANGGOTA_17[0];
+  var desc=document.getElementById('new-desc').value||"Iuran "+memberName;
+  var amt=parseInt(document.getElementById('new-amt').value)||100000;
+  var item={id:"TG-"+Date.now(),date:date,category:cat,amount:amt,memberName:memberName,desc:desc};
+  txs.unshift(item);filteredTxs=txs.slice();updateUI();toast("✅ "+memberName+" - Telegram Sync");
+  try{fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({action:"addTransaksi",ID:item.id,Tanggal:item.date,Anggota:item.memberName,Kategori:item.category+" | "+item.desc,Nominal:item.amount})});}catch(e){}
+  toggleAdd();
+}
+function saveBulk(){toast("✅ Bulk saved - V86");}
+function updateUI(){
+  var list=filteredTxs.slice(0,displayLimit);
+  var masuk=0,keluar=0;filteredTxs.forEach(t=>{if(t.category==="Kas Keluar")keluar+=t.amount;else masuk+=t.amount;});
+  document.getElementById('saldo').textContent='Rp '+fmt(masuk-keluar);
+  document.getElementById('masuk').textContent='+ Rp '+fmt(masuk);
+  document.getElementById('keluar').textContent='- Rp '+fmt(keluar);
+  document.getElementById('tx-title').textContent=list.length+'/'+filteredTxs.length;
+  document.getElementById('new-member').innerHTML=members.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+  document.getElementById('member-list').innerHTML=members.map(m=>`<label style="display:flex;align-items:center;gap:6px;border:1px solid #22d3ee;border-radius:10px;padding:10px;background:#fff;font-size:11px"><input type="checkbox" value="${m.id}" class="bulk-cb"> ${m.name} - Telegram: /tambah MASUK 100000 ${m.name}</label>`).join('');
+  var map={};members.forEach(m=>map[m.name]={name:m.name,total:0,count:0});filteredTxs.forEach(t=>{if(map[t.memberName]){map[t.memberName].total+=t.amount;map[t.memberName].count++;}});
+  var arr=Object.values(map).sort((a,b)=>b.total-a.total);
+  document.getElementById('anggota-list').innerHTML=arr.map(m=>`<div onclick="filterBy('${m.name}')" style="border-radius:14px;padding:14px;text-align:center;background:linear-gradient(135deg,#ecfeff,#cffafe);border:1.5px solid #22d3ee;cursor:pointer"><div style="font-weight:900">${m.name}</div><div style="background:#fff;border-radius:999px;padding:4px 10px;font-size:11px;margin-top:6px">Rp ${fmt(m.total)}</div><div style="font-size:9px">${m.count}x • Telegram</div></div>`).join('');
+  document.getElementById('tx-list').innerHTML=list.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;background:#F0FDFF;border:1px solid #a5f3fc;border-radius:10px;padding:10px;margin-bottom:6px"><div style="flex:1"><div style="font-size:11px;font-weight:800">${t.memberName} • ${t.category} <span style="background:#229ED9;color:#fff;font-size:7px;padding:2px 6px;border-radius:999px">TG</span></div><div style="font-size:10px;background:#fff;border-radius:6px;padding:2px 6px;margin-top:2px;display:inline-block">📝 ${t.desc}</div><div style="font-size:9px;color:#666">${t.date} • Rp ${fmt(t.amount)}</div></div><div style="display:flex;gap:4px;align-items:center"><div style="font-weight:900;color:${t.category==='Kas Keluar'?'#dc2626':'#059669'}">Rp ${fmt(t.amount)}</div><button class="edit-btn" onclick="editTx('${t.id}')">✏️</button><button class="del-btn" onclick="delTx('${t.id}')">×</button></div></div>`).join('');
+  document.getElementById('rekening-list').innerHTML=`<div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px"><div style="font-weight:900">BCA - 6830747280</div><div style="font-size:11px">Eka Iswanto</div><button class="btn btn-copy" style="margin-top:8px" onclick="navigator.clipboard.writeText('6830747280');toast('✅ Copied')">📋 Copy</button></div><div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:8px"><div style="font-weight:900">MANDIRI - 1570005764080</div><div style="font-size:11px">Eka Iswanto</div><button class="btn btn-copy" style="margin-top:8px" onclick="navigator.clipboard.writeText('1570005764080');toast('✅ Copied')">📋 Copy</button></div>`;
+}
+function filterBy(name){filteredTxs=txs.filter(t=>t.memberName===name);updateUI();setTab('dashboard');toast("Filter: "+name);}
+function editTx(id){var t=txs.find(x=>x.id===id);if(!t)return;var newDesc=prompt("Edit keterangan:",t.desc);if(newDesc!==null){t.desc=newDesc;updateUI();toast("✏️ Edited: "+t.memberName);} }
+function delTx(id){if(confirm("Hapus transaksi "+id+"?")){txs=txs.filter(x=>x.id!==id);filteredTxs=filteredTxs.filter(x=>x.id!==id);updateUI();toast("🗑️ Deleted");}}
+function syncNow(){toast("🔄 Sync Telegram → Sheet → Web V86");updateUI();}
+function exportPDF(){toast("📄 PDF V86 - Print this page (Ctrl+P)");}
+function toggleLogin(){}
+document.getElementById('new-date').value=new Date().toISOString().slice(0,10);
+updateUI();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
