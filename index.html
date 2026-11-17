@@ -1,0 +1,1951 @@
+<!DOCTYPE html><html lang="id"><head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0077b6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="KAS EF">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<title>KAS EF</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,Inter,system-ui,sans-serif;background:#fff;color:#111;min-height:100vh;max-width:440px;margin:0 auto;padding:0 0 90px;font-size:14px;line-height:1.5}
+.top{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid #e5e5e5;position:sticky;top:0;z-index:20}
+.logo{font-size:18px;font-weight:700;color:#000;cursor:pointer}
+.btn{font-size:11px;border:1px solid #e5e5e5;border-radius:6px;padding:7px 12px;background:#fff;color:#333;font-weight:500;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(0.97);background:#f5f5f5}
+.btn-pdf{background:#000;color:#fff;border-color:#000}
+.sel{background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:8px 10px;color:#111;width:100%;font-size:13px}
+.saldo{padding:12px 16px 8px;display:flex;gap:8px}
+.card{flex:1;background:#fff;border-radius:8px;padding:10px 12px;border:1px solid #e5e5e5}
+.card small{font-size:10px;color:#888;display:block;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+.card b{font-size:13px;color:#111;font-weight:600}
+.bank-minimal{padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.bank-chip{background:#fff;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border:1px solid #e5e5e5}
+.sec{padding:0 16px;margin-top:20px}
+.h{font-size:10px;color:#888;font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between;text-transform:uppercase}
+.list{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5}
+.row{display:flex;justify-content:space-between;padding:11px 12px;border-bottom:1px solid #f5f5f5;align-items:center}
+.ico{width:28px;height:28px;border-radius:6px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-weight:600;color:#555;flex-shrink:0;font-size:11px}
+.ico.ok{background:#000;color:#fff}
+.del{width:28px;height:28px;border-radius:6px;background:#fff;color:#888;border:1px solid #e5e5e5;font-weight:600;cursor:pointer}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:6px;font-size:12px;display:none;z-index:99}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.box{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:340px;border:1px solid #e5e5e5}
+.inp{background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:8px 10px;color:#111;width:100%;margin-top:6px;font-size:13px}
+.btnSave{width:100%;border:none;border-radius:6px;padding:11px;font-weight:600;margin-top:8px;cursor:pointer;font-size:13px}
+.green{background:#111;color:#fff}
+.white{background:#fff;color:#111;border:1px solid #e5e5e5}
+.red{background:#fff;color:#dc2626;border:1px solid #fecaca}
+.admin{display:none;margin:10px 16px 0;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5}
+.admin.show{display:block}
+.tabs{display:flex;gap:4px;padding:8px;background:#fafafa;border-bottom:1px solid #e5e5e5;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs button{flex:1;min-width:50px;white-space:nowrap;font-size:10px;padding:8px 10px;border-radius:6px;border:1px solid transparent;background:transparent;color:#666;cursor:pointer;font-weight:500;user-select:none;-webkit-tap-highlight-color:transparent}
+.tabs button.active{background:#111;color:#fff;border-color:#111}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.admin-col{background:#fafafa;border:1px solid #f5f5f5;border-radius:6px;padding:8px}
+.pull{height:0;overflow:hidden;display:flex;justify-content:center;align-items:center;background:#fff;transition:.2s;font-size:11px;color:#111;font-weight:500;border-bottom:1px solid #f5f5f5}
+.pull.show{height:36px}
+.filter-transaksi{background:#fff;border-radius:8px;padding:10px;margin:0 0 8px 0;border:1px solid #e5e5e5}
+.filter-transaksi .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.filter-transaksi .filter-row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.filter-label{font-size:9px;color:#888;font-weight:600;text-transform:uppercase;margin-bottom:3px;display:block}
+#loginBtn.hidden-admin{display:none}
+.banner-raya{margin:10px 16px 0;padding:10px 12px;border-radius:8px;text-align:center;font-weight:600;font-size:12px;color:#111;border:1px solid #e5e5e5;background:#fafafa}
+</style></head><body class="ultra-minimal">
+<div id="pull" class="pull"><span id="pullTxt">↓ Tarik untuk sync</span></div>
+<div class="top"><div class="logo" id="logo" onclick="secretTap()">KAS EF</div><div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF()">📄 PDF</button><button class="btn hidden-admin" id="loginBtn" onclick="toggleLogin()">Admin ✓</button></div></div>
+<div id="areaHariRaya"></div>
+
+<div class="saldo"><div class="card"><small>total saldo</small><b id="saldo">Rp 0</b></div><div class="card"><small>masuk</small><b id="masuk" style="color:#00b894">Rp 0</b></div><div class="card"><small>keluar</small><b id="keluar" style="color:#ff6b6b">Rp 0</b></div></div>
+
+<div class="bank-minimal">
+  <div class="bank-chip"><div><span class="label">BCA • EKA ISWANTO</span><span class="number">6830747280</span></div><button class="btn" style="padding:7px 12px;font-size:10px" onclick="copyRek('6830747280')">COPY</button></div>
+  <div class="bank-chip"><div><span class="label">MANDIRI • EKA ISWANTO</span><span class="number">1570005764080</span></div><button class="btn" style="padding:7px 12px;font-size:10px" onclick="copyRek('1570005764080')">COPY</button></div>
+</div>
+
+<div class="admin" id="adminPanel">
+<div class="period-selector"><div style="flex:1"><span class="filter-label">📅 Periode Laporan (Hanya Admin - Ngikutin Bulan Transaksi)</span><select id="periodSelect" class="sel" onchange="changePeriod()">
+<option value="2025-01">Januari 2025</option>
+<option value="2025-02">Februari 2025</option>
+<option value="2025-03">Maret 2025</option>
+<option value="2025-04">April 2025</option>
+<option value="2025-05">Mei 2025</option>
+<option value="2025-06">Juni 2025</option>
+<option value="2025-07">Juli 2025</option>
+<option value="2025-08">Agustus 2025</option>
+<option value="2025-09">September 2025</option>
+<option value="2025-10">Oktober 2025</option>
+<option value="2025-11">November 2025</option>
+<option value="2025-12">Desember 2025</option>
+<option value="2026-01">Januari 2026</option>
+<option value="2026-02">Februari 2026</option>
+<option value="2026-03">Maret 2026</option>
+<option value="2026-04">April 2026</option>
+<option value="2026-05">Mei 2026</option>
+<option value="2026-06">Juni 2026</option>
+<option value="2026-07">Juli 2026</option>
+<option value="2026-08">Agustus 2026</option>
+<option value="2026-09">September 2026</option>
+<option value="2026-10">Oktober 2026</option>
+<option value="2026-11">November 2026</option>
+<option value="2026-12">Desember 2026</option>
+<option value="2027-01">Januari 2027</option>
+<option value="2027-02">Februari 2027</option>
+<option value="2027-03">Maret 2027</option>
+<option value="2027-04">April 2027</option>
+<option value="2027-05">Mei 2027</option>
+<option value="2027-06">Juni 2027</option>
+</select><div style="font-size:8px;color:#0077b6;margin-top:4px">Sudah & Belum Bayar otomatis ngikutin bulan ini</div></div><button class="btn" style="background:#0077b6;color:#fff;padding:10px 14px" onclick="setCurrentMonth()">Bulan Ini</button></div>
+<div class="tabs" style="flex-wrap:wrap"><button id="tWA" onclick="tab('WA')">Batch</button><button id="tMasuk" class="active" onclick="tab('Masuk')">Masuk</button><button id="tKeluar" onclick="tab('Keluar')">Keluar</button><button id="tShare" onclick="tab('Share')">Share</button><button id="tAnggota" onclick="tab('Anggota')">Anggota</button><button id="tSpesial" onclick="tab('Spesial')">🎉 Spesial</button><button id="tURL" onclick="tab('URL')">URL</button><button id="tAPI" onclick="tab('API')">🤖 WA API</button></div>
+
+<div id="pWA" style="padding:14px;display:none">
+<div class="admin-grid"><div class="admin-col"><h4>📋 Batch</h4><textarea id="waText" class="inp" rows="6" placeholder="Paste list di sini..."></textarea><button class="btnSave green" onclick="parseWA()">Deteksi</button><button class="btnSave white" onclick="saveBatch()" id="btnBatch" style="display:none">Simpan</button></div>
+<div class="admin-col"><h4>👁️ Preview</h4><div id="preview" style="display:none"><div id="prevList" style="background:#fff;border-radius:12px;padding:10px;font-size:11px;max-height:200px;overflow:auto;border:1px solid rgba(0,180,216,0.08)"></div></div><div id="previewEmpty" style="font-size:11px;color:#8aa8be;text-align:center;padding:20px 0">Kosong</div></div></div></div>
+
+<div id="pMasuk" style="padding:14px"><div class="admin-grid"><div class="admin-col"><h4>📅 Anggota</h4><input type="date" id="dateMasuk" class="inp" style="margin:0"><select id="memberMasuk" class="inp" style="margin:8px 0 0 0"></select></div><div class="admin-col"><h4>💰 Bank & Nominal</h4><select id="bankMasuk" class="inp" style="margin:0"><option>BCA</option><option>MANDIRI</option><option value="CASH">CASH</option></select><input type="number" id="amountMasuk" class="inp" style="margin:8px 0 0 0" value="100000"></div></div>
+<div style="margin-top:10px;background:rgba(224,247,255,0.5);border-radius:14px;padding:12px"><span class="filter-label">📝 Description</span><input type="text" id="descMasuk" class="inp" style="margin:4px 0 0 0" placeholder="saldo bulan Agustus 2026..."></div>
+<button class="btnSave green" onclick="saveMasuk()">Simpan Masuk</button></div>
+
+<div id="pKeluar" style="display:none;padding:14px"><div class="admin-grid"><div class="admin-col"><h4>📅 Tanggal & Kategori Keluar</h4><input type="date" id="dateKeluar" class="inp" style="margin:0"><input type="text" id="catKeluar" class="inp" placeholder="Kategori" style="margin:8px 0 0 0" value="Sisa saldo"></div><div class="admin-col"><h4>💰 Bank & Nominal</h4><select id="bankKeluar" class="inp" style="margin:0"><option>BCA</option><option>MANDIRI</option><option>CASH</option></select><input type="number" id="amountKeluar" class="inp" style="margin:8px 0 0 0" placeholder="Nominal" value="218000"></div></div>
+<div style="margin-top:10px;background:#fff8e1;border-radius:14px;padding:12px"><span class="filter-label">📝 Description</span><input type="text" id="descKeluar" class="inp" style="margin:4px 0 0 0" placeholder="saldo bulan Agustus 2026" value="saldo bulan Agustus 2026"></div>
+<button class="btnSave red" onclick="saveKeluar()">Simpan Keluar</button></div>
+
+<div id="pShare" style="display:none;padding:12px">
+<div style="background:rgba(224,247,255,0.5);border-radius:16px;padding:12px;margin-bottom:10px"><span class="filter-label">Preview Share WA - Ngikutin Bulan <span id="bulanLabelPreview"></span></span><div id="previewShare" style="font-size:10px;white-space:pre-wrap;background:#fff;padding:12px;border-radius:12px;margin-top:8px;font-family:monospace;line-height:1.6;border:1px solid rgba(0,180,216,0.08)"></div></div>
+<div class="share-mini" style="flex-direction:column; gap:10px">
+<button class="btnSave" style="margin:0; background:linear-gradient(135deg,#00b894,#0077b6); color:#fff; padding:14px; font-size:13px; box-shadow:0 6px 16px rgba(0,184,148,.3)" onclick="kirimKeGrupWA()">👥📲 GRATIS - Kirim ke Grup WA EF</button>
+<div style="display:flex; gap:8px; width:100%">
+<button class="btnSave green" style="margin:0; flex:1; padding:10px" onclick="shareWA()">📤 Share WA</button>
+<button class="btn" style="margin:0; padding:10px; background:#fff; color:#0077b6; border-radius:999px; flex:1" onclick="copyWA()">📋 Copy</button>
+</div>
+<div style="background:#e8f5e9; border:1px solid #00b89433; border-radius:10px; padding:8px; text-align:center">
+<div style="font-size:10px; font-weight:800; color:#00b894">🆓 100% GRATIS - Tidak perlu API, tidak perlu Group ID</div>
+<div style="font-size:9px; color:#0a2540; margin-top:2px">Klik → WA terbuka → Pilih Grup EF → Kirim. Jam 07:00 hari raya auto muncul!</div>
+</div>
+</div></div>
+
+
+<div id="pAnggota" style="display:none;padding:14px">
+<div style="background:rgba(224,247,255,0.5);border-radius:16px;padding:14px">
+<span class="filter-label">👥 Kelola Anggota (<span id="countAnggota">0</span>)</span>
+<div style="display:flex;gap:8px;margin-top:8px">
+<input id="newMemberName" class="inp" style="margin:0;flex:1" placeholder="Nama anggota baru...">
+<button class="btn" style="background:#00b894;color:#fff;padding:12px 18px;white-space:nowrap" onclick="addMember()">+ Tambah</button>
+</div>
+<div id="memberList" style="margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto"></div>
+<div style="margin-top:12px;display:flex;gap:8px">
+<button class="btn" style="flex:1;padding:10px" onclick="resetMembers()">🔄 Reset ke Default</button>
+<button class="btn" style="flex:1;padding:10px;background:#ff6b6b;color:#fff;border:none" onclick="exportMembers()">📋 Copy List</button>
+</div>
+<div style="font-size:10px;color:#8aa8be;margin-top:8px">Hapus anggota tidak menghapus transaksi lama. Anggota baru langsung muncul di dropdown Masuk & hitungan WA.</div>
+</div>
+</div>
+
+<div id="pSpesial" style="display:none;padding:14px">
+<div style="background:rgba(255,243,224,0.6);border-radius:16px;padding:14px">
+<span class="filter-label">🎉 Tanggal Spesial Grup (<span id="countSpesial">0</span>)</span>
+<div style="font-size:10px;color:#8aa8be;margin:4px 0 8px">Ultah anggota, anniversary grup, dll. Ucapan otomatis muncul di WA share & banner pas tanggalnya tiba (berulang tiap tahun).</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<input id="spNama" class="inp" style="margin:0" placeholder="Nama acara, mis: Ultah Nia">
+<div style="display:flex;gap:8px">
+<input id="spTgl" type="date" class="inp" style="margin:0;flex:1">
+<input id="spEmoji" class="inp" style="margin:0;width:64px;text-align:center" placeholder="🎂" maxlength="4">
+</div>
+<textarea id="spUcapan" class="inp" style="margin:0;min-height:56px;font-family:inherit" placeholder="Ucapan, mis: Selamat ulang tahun Nia! 🎂&#10;Semoga sehat selalu & makin sukses!"></textarea>
+<button class="btn" style="background:#ff9f43;color:#fff;padding:12px;border:none" onclick="addSpesial()">+ Tambah Tanggal Spesial</button>
+</div>
+<div id="spesialList" style="margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto"></div>
+</div>
+</div>
+<div id="pURL" style="display:none;padding:14px">
+
+<div class="admin-grid"><div class="admin-col"><h4>🔗 URL Sheet</h4><input id="urlInput" class="inp" style="margin:0;font-size:9px;font-family:monospace"></div><div class="admin-col"><h4>⚙️ Aksi</h4><button class="btnSave white" onclick="saveURL()" style="margin:0">💾 Simpan URL</button><button class="btn" style="width:100%;margin-top:8px;padding:10px" onclick="syncNow()">🔄 Sync</button></div></div>
+</div>
+<div id="pAPI" style="display:none;padding:14px">
+<div style="background:linear-gradient(135deg,#e0f7ff,#f0fff4);border:1px solid #00b89422;border-radius:16px;padding:14px">
+<span class="filter-label">🤖 Auto WA - Gratis 100% (Tanpa Bayar)</span>
+<div style="display:flex; gap:6px; margin:8px 0; flex-wrap:wrap">
+  <span style="background:#00b894; color:#fff; padding:3px 8px; border-radius:999px; font-size:9px; font-weight:800">✓ 100% GRATIS</span>
+  <span style="background:#0077b6; color:#fff; padding:3px 8px; border-radius:999px; font-size:9px; font-weight:800">✓ Tanpa API Key</span>
+  <span style="background:#ff9f43; color:#fff; padding:3px 8px; border-radius:999px; font-size:9px; font-weight:800">✓ Auto Jam 07:00</span>
+</div>
+
+<div style="background:#fff; border:2px solid #00b89433; border-radius:12px; padding:10px; margin-bottom:12px">
+  <div style="font-size:11px; font-weight:800; color:#00b894">🆓 MODE GRATIS AKTIF (Default)</div>
+  <div style="font-size:10px; color:#0a2540; margin-top:4px; line-height:1.4">
+    <b>Tanpa API berbayar:</b> Jam 07:00 saat hari raya, aplikasi otomatis buka WA dengan ucapan + laporan sudah siap.<br>
+    Kamu tinggal tap <b>Kirim</b> 1x. <span style="color:#00b894; font-weight:800">Gratis selamanya!</span><br>
+    <span style="font-size:9px; color:#8aa8be">Sudah aktif otomatis, tidak perlu setting apapun.</span>
+  </div>
+  <div style="display:flex; gap:8px; margin-top:8px">
+    <button onclick="daftarCallMeBotOtomatis()" style="flex:1; border:none; background:linear-gradient(135deg,#00b894,#0077b6); color:#fff; border-radius:999px; padding:8px; font-size:10px; font-weight:800; cursor:pointer">🚀 Daftar 1 Klik</button>
+    <button onclick="testGratisWA()" style="flex:1; border:none; background:#00b894; color:#fff; border-radius:999px; padding:8px; font-size:10px; font-weight:800; cursor:pointer">🧪 Test</button>
+    <button onclick="showTutorialCallMeBot()" style="border:1px solid #0077b6; background:#fff; color:#0077b6; border-radius:999px; padding:8px; font-size:10px; font-weight:800; cursor:pointer">📚 Tutorial Lengkap</button>
+    <button onclick="document.getElementById('waApiAktif').checked=true; saveWAAPI(); toast('Mode gratis aktif ✓')" style="border:1px solid #00b894; background:#fff; color:#00b894; border-radius:999px; padding:8px; font-size:10px; font-weight:800; cursor:pointer">✓ Aktifkan</button>
+  </div>
+</div>
+
+<details style="background:#f8fdff; border:1px solid #0077b633; border-radius:12px; padding:10px; margin-bottom:12px">
+  <summary style="font-size:11px; font-weight:800; color:#0077b6; cursor:pointer">📲 Opsi Gratis Lain (CallMeBot - Free WA API) ✅ Personal Use</summary>
+  <div style="background:#e8f5e9; border:1px solid #00b89444; border-radius:10px; padding:8px; margin:8px 0">
+    <div style="font-size:10px; font-weight:800; color:#00b894">✅ Sesuai screenshot: Free API is only for personal use</div>
+    <div style="font-size:9px; color:#0a2540; margin-top:2px">KAS EF adalah grup personal (17 orang), bukan komersial → 100% boleh pakai gratis!</div>
+  </div>
+  <div style="font-size:9px; color:#6b8fa8; margin:6px 0; line-height:1.4">
+    CallMeBot 100% gratis <a onclick="showTutorialCallMeBot()" style="color:#0077b6; font-weight:800; cursor:pointer; text-decoration:underline">📚 Lihat Tutorial</a>, tanpa daftar kartu kredit. Daftar di callmebot.com → dapat apikey → bisa kirim WA otomatis tanpa klik!
+  </div>
+  <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px">
+    <input id="callmebotPhone" class="inp" style="margin:0; font-size:10px" placeholder="No WA kamu (628xxxx) untuk daftar CallMeBot">
+    <input id="callmebotApikey" class="inp" style="margin:0; font-size:10px" placeholder="Apikey dari CallMeBot">
+    <button onclick="saveCallMeBot(); testCallMeBot()" style="border:none; background:#0077b6; color:#fff; border-radius:999px; padding:8px; font-size:10px; font-weight:800">💾 Simpan & Test CallMeBot Gratis</button>
+  </div>
+</details>
+
+<span class="filter-label" style="margin-top:12px; opacity:.6">💳 Opsi Berbayar (Opsional - Jika Mau Full Auto Tanpa Klik)</span>
+<div style="font-size:10px;color:#0a2540;margin:4px 0 10px;line-height:1.4">
+  Pasang API WA (Fonnte / Wablas / Whacenter) biar <b>otomatis terkirim ke grup tanpa klik</b> pas hari raya jam 07:00, meski HP terkunci.<br>
+  <span style="color:#8aa8be">Kosongkan jika hanya mau notif manual (klik tombol).</span>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+  <div>
+    <span class="filter-label">🔗 Endpoint API WA (POST JSON)</span>
+    <input id="waApiUrl" class="inp" style="margin:0;font-size:10px;font-family:monospace" placeholder="https://api.fonnte.com/send atau https://wablas.com/api/send-message">
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+    <div>
+      <span class="filter-label">🔑 Token / API Key</span>
+      <input id="waApiToken" class="inp" style="margin:0;font-size:10px" placeholder="token Fonnte / Wablas" type="password">
+    </div>
+    <div>
+      <span class="filter-label">👥 Target (Untuk Berbayar Saja - Gratis Tidak Perlu)</span>
+      <input id="waApiTarget" class="inp" style="margin:0;font-size:10px" placeholder="628xxxx atau 1203xxxx@g.us untuk grup">
+    </div>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+    <div>
+      <span class="filter-label">⏰ Jam Auto Kirim</span>
+      <select id="waApiJam" class="sel" style="margin:0">
+        <option value="7">07:00 pagi</option>
+        <option value="6">06:00 pagi</option>
+        <option value="8">08:00 pagi</option>
+        <option value="0">Test - kirim sekarang</option>
+      </select>
+    </div>
+    <div>
+      <span class="filter-label">🔔 Status</span>
+      <div style="display:flex; gap:6px; align-items:center; margin-top:4px">
+        <label style="display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700"><input type="checkbox" id="waApiAktif" checked> Aktif</label>
+        <label style="display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700"><input type="checkbox" id="waApiHariRayaSaja" checked> Hanya Hari Raya</label>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+    <button class="btnSave green" onclick="saveWAAPI()" style="margin:0">💾 Simpan API</button>
+    <button class="btnSave white" onclick="testWAAPI()" style="margin:0">🧪 Test Kirim WA</button>
+  </div>
+
+  <div id="waApiLog" style="background:#fff; border:1px solid #00b89422; border-radius:12px; padding:10px; font-size:10px; font-family:monospace; max-height:120px; overflow:auto; display:none"></div>
+
+  <div style="background:#fff8e1; border:1px solid #ffe082; border-radius:12px; padding:10px; margin-top:6px">
+    <div style="font-size:10px; font-weight:800; color:#f57f17">📖 Cara Pakai Fonnte (paling mudah):</div>
+    <div style="font-size:9px; color:#6b8fa8; margin-top:4px; line-height:1.4">
+      1. Daftar di fonnte.com, scan QR WA<br>
+      2. Copy token, paste di atas<br>
+      3. Target = no HP grup (dapat dari info grup) atau no pribadi<br>
+      4. Simpan, lalu Test Kirim<br>
+      5. Pas hari raya jam 07:00 otomatis terkirim full tanpa klik!
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div style="margin-top:12px;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.15);border-radius:16px;padding:14px"><h4 style="font-size:10px;color:#ff6b6b;text-transform:uppercase;margin-bottom:8px">Hapus Data Lokal</h4><button class="btnSave red" onclick="clearAllLocal()">🗑️ Hapus Semua Data di HP</button></div>
+</div>
+</div>
+
+<div class="sec"><div class="h"><span>ANGGOTA (17)</span><span id="infoA">0/17</span></div><div class="list" id="listA"></div></div>
+<div class="sec"><div class="h"><span>TRANSAKSI</span><span id="infoT">0 TRX</span></div>
+<div class="filter-transaksi"><div class="filter-row"><div><span class="filter-label">Bulan</span><select id="filterBulanTx" class="sel" onchange="renderTx()">
+<option value="all">Semua Bulan</option>
+<option value="01">Januari</option>
+<option value="02">Februari</option>
+<option value="03">Maret</option>
+<option value="04">April</option>
+<option value="05">Mei</option>
+<option value="06">Juni</option>
+<option value="07">Juli</option>
+<option value="08">Agustus</option>
+<option value="09">September</option>
+<option value="10">Oktober</option>
+<option value="11">November</option>
+<option value="12">Desember</option>
+</select></div><div><span class="filter-label">Tahun</span><select id="filterTahunTx" class="sel" onchange="renderTx()">
+<option value="all">Semua Tahun</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+<option value="2027">2027</option>
+<option value="2028">2028</option>
+</select></div></div><div class="filter-row2"><div><span class="filter-label">Jenis</span><select id="filterJenis" class="sel" onchange="renderTx()"><option value="all">Semua</option><option value="masuk">Masuk</option><option value="keluar">Keluar</option></select></div><div><span class="filter-label">Bank</span><select id="filterBank" class="sel" onchange="renderTx()"><option value="all">Semua</option><option value="BCA">BCA</option><option value="MANDIRI">MANDIRI</option><option value="CASH">CASH</option></select></div><div><span class="filter-label">Aksi</span><button class="btn" style="width:100%;padding:10px;background:#0077b6;color:#fff" onclick="resetFilterTx()">Reset</button></div></div></div><div class="list" id="listT"></div></div>
+
+<div id="delM" class="modal"><div class="box" style="text-align:center"><div id="delName" style="font-weight:900;margin-top:8px;color:#0077b6"></div><div style="display:flex;gap:8px;margin-top:16px"><button class="btn" style="flex:1;padding:12px" onclick="closeDel()">Batal</button><button class="btn" style="flex:1;padding:12px;background:#ff6b6b;color:#fff" onclick="doDel()">Hapus</button></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+
+var DEFAULT_MEMBERS=["Nia","Aditya","Anisa","Aaf","Syarif","Budi","Topik","Yudi","Heru","Dozen","Putri","Arief","Anah","Supriyadi","Zaelani","Nely","Eka","Perdi"];
+var MEMBERS_KEY="kas-ef-members-v1";
+function getMembers(){ var base=DEFAULT_MEMBERS.slice(); try{ var s=localStorage.getItem(MEMBERS_KEY); if(s){ var a=JSON.parse(s); if(Array.isArray(a)&&a.length>0){ a.forEach(function(x){ if(base.indexOf(x)<0) base.push(x); }); return base; } } }catch(e){} return base; }
+function saveMembers(arr){ localStorage.setItem(MEMBERS_KEY, JSON.stringify(arr)); }
+var MEMBERS=getMembers();
+function refreshMembers(){ MEMBERS=getMembers(); }
+
+var MAP={"opik":"Topik","neli":"Nely","nelly":"Nely","pak heru":"Heru","sisa":"Sisa saldo","sisa saldo":"Sisa saldo"};
+var MONTHS_ID=["januari","februari","maret","april","mei","juni","juli","agustus","september","oktober","november","desember"];
+function norm(n){ if(!n) return ""; var k=n.toLowerCase().trim().replace(/^pak\s+/,''); if(MAP[k]) return MAP[k]; for(var i=0;i<MEMBERS.length;i++){ if(MEMBERS[i].toLowerCase()===k) return MEMBERS[i]; } if(k==="test"||k==="contoh") return ""; if(k.toLowerCase().includes("sisa saldo")) return "Sisa saldo"; return n.charAt(0).toUpperCase()+n.slice(1).toLowerCase(); }
+var DEFAULT_URL="https://script.google.com/macros/s/AKfycbwZyzfPgJiNbBsxwKAfFxnRq2Iz50g9XYvkXU9CJdfywd9bc9n5bGpv7sXyKSOE3Ux72A/exec";
+var KEY="kas-ef-final-v1"; var ADMIN="kas-ef-admin-v1"; var URL_KEY="kas-ef-url-v1"; var PERIOD_KEY="kas-ef-period-v1";
+var txs=[]; var batch=[]; var delId=null; var isSync=false;
+
+function getTodayYm(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0'); }
+function getLatestYmFromData(){
+  try{
+    if(!txs || !txs.length) return getTodayYm();
+    var sorted = txs.slice().sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+    var latest = sorted[0];
+    if(latest && latest.ym) return latest.ym;
+    if(latest && latest.date) return ymFromDate(latest.date);
+    return getTodayYm();
+  }catch(e){ return getTodayYm(); }
+}
+function applyFilterBulanTerbaru(){
+  try{
+    var latestYm = getLatestYmFromData();
+    if(!latestYm || latestYm.indexOf('-')===-1) return;
+    var parts = latestYm.split('-');
+    var fb = document.getElementById('filterBulanTx');
+    var fy = document.getElementById('filterTahunTx');
+    var ps = document.getElementById('periodSelect');
+    if(fb) fb.value = parts[1];
+    if(fy) fy.value = parts[0];
+    if(ps) ps.value = latestYm;
+    try{ localStorage.setItem(PERIOD_KEY, latestYm); cur = latestYm; }catch(e){}
+  }catch(e){}
+}
+
+function ensureFilterBulanTahun(){
+  try{
+    var fb=document.getElementById('filterBulanTx');
+    var fy=document.getElementById('filterTahunTx');
+    if(fb && fb.options.length===0){
+      var months=["Semua Bulan","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+      fb.innerHTML=months.map(function(m,i){ if(i===0) return '<option value="all">Semua Bulan</option>'; var mm=String(i).padStart(2,'0'); return '<option value="'+mm+'">'+m+'</option>'; }).join('');
+    }
+    if(fy && fy.options.length===0){
+      var years=["Semua Tahun","2024","2025","2026","2027","2028"];
+      fy.innerHTML=years.map(function(y){ if(y==="Semua Tahun") return '<option value="all">Semua Tahun</option>'; return '<option value="'+y+'">'+y+'</option>'; }).join('');
+    }
+    // set to current month if still all or empty
+    var latest=getLatestYmFromData();
+    if(latest){
+      var p=latest.split('-');
+      if(fb && (fb.value===''||fb.value==='all')) fb.value=p[1];
+      if(fy && (fy.value===''||fy.value==='all')) fy.value=p[0];
+    }
+  }catch(e){ console.log('ensureFilter error', e); }
+}
+
+function forceSyncData(){
+  toast('Sync dari Sheet...');
+  var url = localStorage.getItem(URL_KEY) || DEFAULT_URL;
+  if(!url){ toast('URL Sheet belum diset'); return; }
+  var pull=document.getElementById('pull');
+  if(pull) pull.className='pull show';
+  var pullTxt=document.getElementById('pullTxt');
+  if(pullTxt) pullTxt.textContent='Sync...';
+  fetch(url+"?action=getData&t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(d){
+    var list=d.transaksi||d.data||[];
+    if(!list || list.length===0){ toast('Sheet kosong'); if(pull) pull.className='pull'; render(); return; }
+    txs=list.map(function(x){
+      var kat=String(x.Kategori||"");
+      var bank='BCA';
+      var uk=kat.toUpperCase();
+      if(uk.indexOf('CASH')!==-1||uk.indexOf('TUNAI')!==-1) bank='CASH';
+      else if(uk.indexOf('MANDIRI')!==-1) bank='MANDIRI';
+      return {id:String(x.ID||x.id||('t-'+Date.now()+Math.random())), date:String(x.Tanggal||'').slice(0,10), ym:ymFromDate(x.Tanggal), memberName:norm(String(x.Anggota||'')), amount:parseInt(String(x.Nominal||0).replace(/[^0-9]/g,''))||0, bank:bank, jenis:(uk.indexOf('KELUAR')!==-1||String(x.Nominal).indexOf('-')!==-1)?'keluar':'masuk', deskripsi:kat, customDesc:""};
+    }).filter(function(x){ return x.memberName && x.memberName!=="TEST"; });
+    saveLocal();
+    applyFilterBulanTerbaru();
+    if(pull) pull.className='pull';
+    render();
+    toast('Sync OK - '+txs.length+' data');
+  }).catch(function(e){
+    if(pull) pull.className='pull';
+    toast('Sync gagal');
+  });
+}
+function loadSampleData(){
+  if(!confirm('Load 3 sample data Mei 2026?')) return;
+  var sample = [
+    {id:'t-sample-1', date:'2026-05-15', ym:'2026-05', memberName:'Budi', amount:100000, bank:'BCA', jenis:'masuk', deskripsi:'BCA | Iuran Budi Mei 2026', customDesc:''},
+    {id:'t-sample-2', date:'2026-05-16', ym:'2026-05', memberName:'Ani', amount:100000, bank:'MANDIRI', jenis:'masuk', deskripsi:'MANDIRI | Iuran Ani Mei 2026', customDesc:''},
+    {id:'t-sample-3', date:'2026-05-17', ym:'2026-05', memberName:'Sisa saldo', amount:50000, bank:'CASH', jenis:'keluar', deskripsi:'CASH | KELUAR | Konsumsi', customDesc:'Konsumsi'}
+  ];
+  txs = txs.concat(sample);
+  saveLocal();
+  applyFilterBulanTerbaru();
+  render();
+  toast('Sample ditambah');
+}
+
+var cur = localStorage.getItem(PERIOD_KEY) || getTodayYm();
+function detectBank(t){ var l=t.toLowerCase(); if(l.includes('cash')||l.includes('tunai')||l.includes('titip')) return 'CASH'; if(l.includes('mandiri')) return 'MANDIRI'; return 'BCA'; }
+function detectBankFromKategori(k){ if(!k) return 'BCA'; var u=k.toUpperCase(); if(u.includes('CASH')||u.includes('TUNAI')||u.includes('TITIP')) return 'CASH'; if(u.includes('MANDIRI')) return 'MANDIRI'; return 'BCA'; }
+function getBankLogo(b){ if(b==='BCA') return '<span class="logo-bca">BCA</span>'; if(b==='MANDIRI') return '<span class="logo-mandiri">mandiri</span>'; if(b==='CASH') return '<span class="logo-cash">CASH</span>'; return b; }
+var tapCount=0; var lastTap=0;
+function secretTap(){ var now=Date.now(); if(now-lastTap>3000){tapCount=0;} tapCount++; lastTap=now; if(tapCount>=5){tapCount=0; if(localStorage.getItem(ADMIN)!=='1'){localStorage.setItem(ADMIN,'1'); document.getElementById('loginBtn').classList.remove('hidden-admin'); document.getElementById('adminPanel').classList.add('show'); toast('🔓 Admin'); render();} else {autoLogout();}}}
+function autoLogout(){localStorage.setItem(ADMIN,'0'); document.getElementById('loginBtn').classList.add('hidden-admin'); document.getElementById('adminPanel').classList.remove('show'); render(); toast('Logout');}
+function getURL(){return localStorage.getItem(URL_KEY)||DEFAULT_URL;}
+function setURLInfo(){document.getElementById('urlInput').value=getURL();}
+function load(){try{var s=localStorage.getItem(KEY); if(s){var d=JSON.parse(s); if(Array.isArray(d)) txs=d;}}catch(e){}}
+function saveLocal(){try{localStorage.setItem(KEY, JSON.stringify(txs)); return true;}catch(e){return false;}}
+function clearAllLocal(){ if(!confirm('Yakin HAPUS SEMUA data di HP ini?')) return; txs=[]; localStorage.removeItem(KEY); saveLocal(); render(); toast('Data HP dihapus'); }
+function toast(m){var e=document.getElementById('toast'); e.textContent=m; e.style.display='block'; setTimeout(()=>e.style.display='none',3000);}
+function fmt(n){return new Intl.NumberFormat('id-ID').format(Math.abs(n)||0);}
+function mName(ym){if(!ym||!ym.includes('-')) return ym; var a=ym.split('-'); var m=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]; var idx=parseInt(a[1])-1; if(idx<0||idx>11) return ym; return m[idx]+" "+a[0];}
+function ymFromDate(d){if(!d) return cur; var dd=new Date(d); if(isNaN(dd)) return cur; return dd.getFullYear()+"-"+String(dd.getMonth()+1).padStart(2,'0');}
+function parseBulanTahunFromText(text){var low=text.toLowerCase(); var pattern1 = new RegExp("(" + MONTHS_ID.join("|") + ")\\s*(20\\d{2})", "i"); var m1 = low.match(pattern1); if(m1){var bulanIdx = MONTHS_ID.indexOf(m1[1].toLowerCase())+1; var tahun = m1[2]; return {bulan:String(bulanIdx).padStart(2,'0'), tahun:tahun, ym:tahun+"-"+String(bulanIdx).padStart(2,'0')};} return null;}
+function parseTanggalFromLine(line){var reSlash = line.match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](20\d{2})/); if(reSlash){var d=String(reSlash[1]).padStart(2,'0'); var m=String(reSlash[2]).padStart(2,'0'); var y=reSlash[3]; return {date:y+"-"+m+"-"+d, ym:y+"-"+m};} var reBulanTahun = new RegExp("(" + MONTHS_ID.join("|") + ")\\s*(20\\d{2})", "i"); var mBT = line.toLowerCase().match(reBulanTahun); if(mBT){var bulanIdx = MONTHS_ID.indexOf(mBT[1].toLowerCase())+1; var y=mBT[2]; var m=String(bulanIdx).padStart(2,'0'); return {date:y+"-"+m+"-27", ym:y+"-"+m};} return null;}
+function extractDeskripsi(line){ var parts = line.split(' - '); if(parts.length > 1){ return parts.slice(1).join(' - ').trim(); } return ""; }
+function copyRek(no){navigator.clipboard.writeText(no).then(()=>toast('Rek '+no+' disalin'));}
+function changePeriod(){ var sel=document.getElementById('periodSelect').value; cur=sel; localStorage.setItem(PERIOD_KEY, cur); render(); updateSharePreview(); toast('Periode '+mName(cur)); }
+function setCurrentMonth(){ cur=getTodayYm(); localStorage.setItem(PERIOD_KEY, cur); document.getElementById('periodSelect').value=cur; render(); updateSharePreview(); toast(mName(cur)); }
+function init(){
+  var mem=document.getElementById('memberMasuk'); mem.innerHTML=MEMBERS.map(m=>`<option value="${m}">${m}</option>`).join('');
+  var today=new Date().toISOString().slice(0,10); document.getElementById('dateMasuk').value=today; document.getElementById('dateKeluar').value=today;
+  var periodSel=document.getElementById('periodSelect'); var options=[]; for(var y=2025;y<=2027;y++){ for(var m=1;m<=12;m++){ var ym=y+"-"+String(m).padStart(2,'0'); options.push(ym); } } periodSel.innerHTML=options.map(ym=>`<option value="${ym}">${mName(ym)}</option>`).join(''); periodSel.value=cur;
+  var fb=document.getElementById('filterBulanTx');
+  var monthsTx=["Semua Bulan","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+  if(fb){
+    fb.innerHTML=monthsTx.map(function(m,i){ if(i===0) return '<option value="all">Semua Bulan</option>'; var mm=String(i).padStart(2,'0'); return '<option value="'+mm+'">'+m+'</option>'; }).join('');
+  }
+  var fy=document.getElementById('filterTahunTx');
+  var yearsTx=["Semua Tahun"]; for(var y=2025;y<=2027;y++) yearsTx.push(y);
+  if(fy){
+    fy.innerHTML=yearsTx.map(function(y){ if(y==="Semua Tahun") return '<option value="all">Semua Tahun</option>'; return '<option value="'+y+'">'+y+'</option>'; }).join('');
+  }
+  try{
+    var latestYmInit = getLatestYmFromData();
+    if(latestYmInit && txs && txs.length>0){
+      var pInit = latestYmInit.split('-');
+      if(fb) fb.value = pInit[1] || 'all';
+      if(fy) fy.value = pInit[0] || 'all';
+    } else {
+      var todayYm = getTodayYm().split('-');
+      if(fb) fb.value = todayYm[1];
+      if(fy) fy.value = todayYm[0];
+    }
+  }catch(e){
+    try{
+      var todayYm2 = getTodayYm().split('-');
+      if(fb) fb.value = todayYm2[1];
+      if(fy) fy.value = todayYm2[0];
+    }catch(e2){}
+  } setURLInfo();
+  if(!localStorage.getItem(URL_KEY)){ localStorage.setItem(URL_KEY, DEFAULT_URL); }
+  if(localStorage.getItem(ADMIN)==='1'){ document.getElementById('loginBtn').classList.remove('hidden-admin'); document.getElementById('adminPanel').classList.add('show'); }
+  setTimeout(syncNow, 300);
+}
+function resetFilterTx(){
+  try{
+    var latest = getLatestYmFromData();
+    var fb=document.getElementById('filterBulanTx');
+    var fy=document.getElementById('filterTahunTx');
+    if(latest && fb && fy){
+      var p=latest.split('-');
+      fb.value=p[1]; fy.value=p[0];
+    } else {
+      var todayYm = getTodayYm().split('-');
+      if(fb) fb.value=todayYm[1];
+      if(fy) fy.value=todayYm[0];
+    }
+  }catch(e){}
+  document.getElementById('filterJenis').value='all';
+  document.getElementById('filterBank').value='all';
+  renderTx();
+}
+function toggleLogin(){ if(localStorage.getItem(ADMIN)==='1'){ autoLogout(); } }
+function closeDel(){document.getElementById('delM').style.display='none'; delId=null;}
+function doDel(){if(!delId) return; txs=txs.filter(t=>t.id!==delId); if(saveLocal()){render(); closeDel(); toast('Terhapus'); sendToSheet({action:"deleteTransaksi", ID:delId});} delId=null;}
+function saveURL(){var u=document.getElementById('urlInput').value.trim(); if(!u.includes('/exec')){toast('URL harus /exec'); return;} localStorage.setItem(URL_KEY, u); setURLInfo(); toast('URL disimpan');}
+function syncNow(){
+  var urlBase=getURL(); if(!urlBase){toast('Set URL dulu'); return;} if(isSync) return; isSync=true;
+  var pull=document.getElementById('pull'); var txt=document.getElementById('pullTxt'); pull.className='pull show'; txt.textContent='⏳ Sinkron...';
+  fetch(urlBase+"?action=getData&t="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(d=>{ 
+    var list=d.transaksi||d.data||[]; 
+    if(list.length===0){ txs=[]; saveLocal(); pull.className='pull'; isSync=false; render(); return; }
+    txs=list.map(x=>{ var kat=String(x.Kategori||""); var bank = detectBankFromKategori(kat); var customDesc=""; if(kat.includes(' - ')){ var parts=kat.split(' - '); var last=parts[parts.length-1].trim(); if(last && !last.toLowerCase().includes('iuran') && last.length<80){customDesc=last;}} return {id:String(x.ID||x.id), date:String(x.Tanggal||'').slice(0,10), ym:ymFromDate(x.Tanggal), memberName:norm(String(x.Anggota||'')), amount:parseInt(String(x.Nominal||0).replace(/[^0-9]/g,''))||0, bank:bank, jenis:kat.toUpperCase().includes('KELUAR')||String(x.Nominal).includes('-')?'keluar':'masuk', deskripsi:kat, customDesc:customDesc}; }).filter(x=>x.memberName && x.memberName!=="TEST"); saveLocal(); 
+    pull.className='pull'; isSync=false; render();
+  }).catch(e=>{
+    var cb='cb_'+Date.now(); window[cb]=function(d){ try{ var list=d.transaksi||d.data||[]; if(list.length===0){ txs=[]; saveLocal(); pull.className='pull'; isSync=false; render(); try{ delete window[cb]; }catch(e){} return; } txs=list.map(x=>{ var kat=String(x.Kategori||""); var bank = detectBankFromKategori(kat); var customDesc=""; if(kat.includes(' - ')){ var parts=kat.split(' - '); var last=parts[parts.length-1].trim(); if(last && !last.toLowerCase().includes('iuran')){customDesc=last;}} return {id:String(x.ID||x.id), date:String(x.Tanggal||'').slice(0,10), ym:ymFromDate(x.Tanggal), memberName:norm(String(x.Anggota||'')), amount:parseInt(String(x.Nominal||0).replace(/[^0-9]/g,''))||0, bank:bank, jenis:kat.toUpperCase().includes('KELUAR')||String(x.Nominal).includes('-')?'keluar':'masuk', deskripsi:kat, customDesc:customDesc}; }).filter(x=>x.memberName && x.memberName!=="TEST"); saveLocal(); }catch(err){} pull.className='pull'; isSync=false; render(); try{ delete window[cb]; }catch(e){} }; 
+    var s=document.createElement('script'); s.src=urlBase+"?action=getData&callback="+cb+"&t="+Date.now(); s.onerror=function(){ pull.className='pull'; isSync=false; render(); }; document.body.appendChild(s); 
+  });
+}
+var startY=0; var pulling=false;
+document.addEventListener('touchstart',e=>{ if(window.scrollY===0){ startY=e.touches[0].pageY; pulling=true; } },{passive:true});
+document.addEventListener('touchmove',e=>{ if(!pulling) return; var curY=e.touches[0].pageY; var diff=curY-startY; if(diff>0 && window.scrollY===0){ var p=document.getElementById('pull'); var t=document.getElementById('pullTxt'); if(diff<80){ p.className='pull show'; t.textContent='↓ Tarik untuk sync'; }else{ p.className='pull show'; t.textContent='↑ Lepas untuk sync'; } } },{passive:true});
+document.addEventListener('touchend',e=>{ if(!pulling) return; pulling=false; var p=document.getElementById('pull'); var t=document.getElementById('pullTxt'); if(p.classList.contains('show')){ if(t.textContent.includes('Lepas')) syncNow(); else p.className='pull'; } });
+function tab(t){
+  try{
+    ['WA','Masuk','Keluar','Share','Anggota','Spesial','URL'].forEach(function(x){
+      var btn=document.getElementById('t'+x);
+      var panel=document.getElementById('p'+x);
+      if(btn) btn.classList.remove('active');
+      if(panel) panel.style.display='none';
+    });
+    var activeBtn=document.getElementById('t'+t);
+    var activePanel=document.getElementById('p'+t);
+    if(activeBtn) activeBtn.classList.add('active');
+    if(activePanel) activePanel.style.display='block';
+    if(t==='Share' && typeof updateSharePreview==='function') updateSharePreview();
+    if(t==='Anggota' && typeof renderMemberList==='function') renderMemberList();
+    if(t==='Spesial' && typeof renderSpesialList==='function') renderSpesialList();
+  }catch(e){ console.log('tab error', e); }
+}
+function parseWA(){
+  var text=document.getElementById('waText').value.trim(); if(!text){toast('Paste dulu'); return;}
+  var lines=text.split('\n').map(s=>s.trim()).filter(Boolean);
+  var globalDateObj = null; var globalDateLineIndex = -1;
+  for(var gi=0; gi<lines.length; gi++){ var gl = lines[gi]; if(/^\s*\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]20\d{2}\s*$/.test(gl)){ var parsed = parseTanggalFromLine(gl); if(parsed){ globalDateObj = parsed; globalDateLineIndex = gi; break; } } }
+  if(!globalDateObj){ var bt = parseBulanTahunFromText(text); if(bt){ globalDateObj = {date:bt.ym+"-27", ym:bt.ym}; } }
+  var rawBatch=[]; 
+  lines.forEach((l, idx)=>{ 
+    if(idx===globalDateLineIndex) return; 
+    var low=l.toLowerCase(); 
+    if(low.includes('kas ef') && (low.includes('20') || MONTHS_ID.some(m=>low.includes(m)))){ var bt = parseBulanTahunFromText(l); if(bt && l.split(' ').length<=5) return; } 
+    if(low.startsWith('masuk rp') || low.startsWith('keluar rp') || low.includes('bca 683') || low.includes('mandiri 157') || low.includes('shorturl') || low.includes('https://')){ return; } 
+    if(/^\s*\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]20\d{2}\s*$/.test(l)) return; 
+    var bank = detectBank(l);
+    var customDesc = extractDeskripsi(l);
+    var tglInfo = parseTanggalFromLine(l); var dateStr, ymStr; if(tglInfo){ dateStr=tglInfo.date; ymStr=tglInfo.ym; } else if(globalDateObj){ dateStr=globalDateObj.date; ymStr=globalDateObj.ym; } else { dateStr=cur+"-27"; ymStr=cur; } 
+    var rawName=l; rawName=rawName.replace(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](20\d{2})/g,'').replace(new RegExp("(" + MONTHS_ID.join("|") + ")\\s*(20\\d{2})?","gi"),''); 
+    var rawWithoutDesc = rawName.split(' - ')[0];
+    rawWithoutDesc=rawWithoutDesc.split(/tf|cash|bca|mandiri|tunai|titip|tangan/i)[0].trim().replace(/[^a-zA-Z ]/g,'').trim(); 
+    if(!rawWithoutDesc) rawWithoutDesc=l.split(' ')[0].replace(/[^a-zA-Z]/g,''); 
+    if(!rawWithoutDesc) return; 
+    var normalized = norm(rawWithoutDesc); if(!normalized || normalized==="Sisa saldo") return; 
+    var deskripsi = bank+" | Iuran "+normalized+" "+mName(ymStr) + (customDesc ? " - "+customDesc : "");
+    rawBatch.push({name:normalized, bank:bank, raw:l, date:dateStr, ym:ymStr, deskripsi:deskripsi, customDesc:customDesc}); 
+  });
+  batch=[]; var seen={}; var existMap={}; txs.forEach(t=>{ if(t.jenis==='masuk' && t.memberName!=="TEST" && t.memberName!=="Sisa saldo"){ var k=t.memberName+"|"+t.ym; existMap[k]=true; } }); rawBatch.forEach(item=>{ var key=item.name+"|"+item.ym; if(existMap[key]){return;} if(seen[key]){return;} seen[key]=true; batch.push(item); });
+  document.getElementById('preview').style.display='block'; document.getElementById('previewEmpty').style.display='none'; document.getElementById('btnBatch').style.display='block';
+  document.getElementById('prevList').innerHTML=batch.map((b,i)=>`${i+1}. ${b.raw} → <b>${b.name}</b> ${getBankLogo(b.bank)}${b.customDesc? `<br><span style="background:#fff8e1;padding:2px 6px;border-radius:6px;font-size:10px"><i>'${b.customDesc}'</i></span>`:''}`).join('<br><br>');
+  document.getElementById('btnBatch').textContent=`Simpan ${batch.length}`;
+}
+function sendToSheet(params){ var urlBase=getURL(); if(!urlBase) return; var qs = Object.keys(params).map(k=>k+"="+encodeURIComponent(params[k])).join("&"); var url = urlBase+"?"+qs+"&t="+Date.now(); try{var img=new Image(); img.src=url;}catch(e){} try{fetch(url,{mode:'no-cors', keepalive:true});}catch(e){} }
+function saveBatch(){ if(!batch.length){toast('Tidak ada'); return;} var total=batch.length; var now=Date.now(); batch.forEach((it,i)=>{ var id='t-'+now+'-'+i; txs.push({id:id, date:it.date, ym:it.ym, memberName:it.name, amount:100000, bank:it.bank, jenis:'masuk', deskripsi:it.deskripsi, customDesc:it.customDesc||""}); sendToSheet({action:"addTransaksi", ID:id, Tanggal:it.date, Anggota:it.name, Kategori:it.deskripsi, Nominal:100000}); }); if(saveLocal()){render(); toast(`${total} masuk`); document.getElementById('waText').value=''; document.getElementById('preview').style.display='none'; document.getElementById('previewEmpty').style.display='block'; batch=[]; updateSharePreview();} }
+function saveMasuk(){ 
+  var date=document.getElementById('dateMasuk').value||cur+"-27"; 
+  var member=document.getElementById('memberMasuk').value; 
+  var amount=Number(document.getElementById('amountMasuk').value); 
+  var bank=document.getElementById('bankMasuk').value; 
+  var customDesc=document.getElementById('descMasuk').value.trim();
+  if(!member||!amount){toast('Lengkapi'); return;} 
+  var ym=ymFromDate(date); 
+  var fullDesc = bank+" | Iuran "+member+" "+mName(ym) + (customDesc ? " - "+customDesc : "");
+  var id='t-'+Date.now(); 
+  txs.push({id:id, date:date, ym:ym, memberName:norm(member), amount:amount, bank:bank, jenis:'masuk', deskripsi:fullDesc, customDesc:customDesc}); 
+  if(saveLocal()){render(); toast(`Masuk ✓`); sendToSheet({action:"addTransaksi", ID:id, Tanggal:date, Anggota:member, Kategori:fullDesc, Nominal:amount}); document.getElementById('descMasuk').value='';}
+}
+function saveKeluar(){ 
+  var date=document.getElementById('dateKeluar').value||cur+"-27"; 
+  var cat=document.getElementById('catKeluar').value||'Sisa saldo';
+  var amount=Number(document.getElementById('amountKeluar').value); 
+  var bank=document.getElementById('bankKeluar').value; 
+  var customDesc=document.getElementById('descKeluar').value.trim();
+  if(!amount){toast('Isi nominal'); return;} 
+  var fullDesc = bank+" | KELUAR | "+cat+" - "+customDesc; 
+  var id='t-keluar-'+Date.now(); 
+  txs.push({id:id, date:date, ym:ymFromDate(date), memberName:cat, amount:amount, bank:bank, jenis:'keluar', deskripsi:fullDesc, customDesc:customDesc}); 
+  if(saveLocal()){render(); toast('Keluar ✓'); sendToSheet({action:"addTransaksi", ID:id, Tanggal:date, Anggota:cat, Kategori:fullDesc, Nominal:"-"+amount}); document.getElementById('descKeluar').value='';}
+}
+function askDel(id,name){ if(localStorage.getItem(ADMIN)!=='1'){return;} delId=id; document.getElementById('delName').textContent='Hapus '+name+'?'; document.getElementById('delM').style.display='flex'; }
+function closeDel(){document.getElementById('delM').style.display='none'; delId=null;}
+function doDel(){if(!delId) return; txs=txs.filter(t=>t.id!==delId); if(saveLocal()){render(); closeDel(); toast('Terhapus'); sendToSheet({action:"deleteTransaksi", ID:delId});} delId=null;}
+function saveURL(){var u=document.getElementById('urlInput').value.trim(); if(!u.includes('/exec')){toast('URL harus /exec'); return;} localStorage.setItem(URL_KEY, u); setURLInfo(); toast('URL disimpan');}
+function getShareText(){
+  // FILTER BERDASARKAN BULAN YANG DIPILIH (cur) - SESUAI REQUEST TERBARU
+  var allMasukAllTime = txs.filter(t=>t.jenis!=='keluar' && t.memberName!=="TEST");
+  var allMasukFiltered = allMasukAllTime.filter(t=>t.ym===cur); // hanya bulan terpilih
+  var memberMasukFiltered = txs.filter(t=>t.jenis!=='keluar' && t.memberName!=="TEST" && t.memberName!=="Sisa saldo" && t.ym===cur);
+  
+  // Saldo: total keseluruhan (biar tidak bingung), tapi Masuk bulan ini dihitung dari filter
+  var masukAllTime = allMasukAllTime.reduce((s,t)=>s+t.amount,0);
+  var masukBulanIni = allMasukFiltered.reduce((s,t)=>s+t.amount,0);
+  var keluarAll=txs.filter(t=>t.jenis==='keluar').reduce((s,t)=>s+t.amount,0);
+  var saldo=masukAllTime-keluarAll;
+  
+  var uniqPerBank={BCA:new Set(), MANDIRI:new Set(), CASH:new Set()};
+  var namesPerBank={BCA:[], MANDIRI:[], CASH:[]};
+  var seenMember={}; 
+  memberMasukFiltered.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  memberMasukFiltered.forEach(t=>{ 
+    if(t.memberName==="Sisa saldo") return;
+    if(seenMember[t.memberName]) return; 
+    seenMember[t.memberName]=true; 
+    var b=(t.bank||"BCA").toUpperCase(); 
+    if(uniqPerBank[b]){ uniqPerBank[b].add(t.memberName); namesPerBank[b].push(t.memberName); }
+  });
+  // Belum bayar = yang belum bayar DI BULAN INI
+  var mapAllBulanIni={}; memberMasukFiltered.forEach(t=>{ mapAllBulanIni[t.memberName]=true; });
+  var belum=MEMBERS.filter(m=>!mapAllBulanIni[m]);
+  
+  var tgl = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+  var bulanLabel = mName(cur);
+  var bulanSaja = bulanLabel.split(' ')[0];
+  var totalBayarBulanIni = uniqPerBank.BCA.size + uniqPerBank.MANDIRI.size + uniqPerBank.CASH.size;
+  var text = `*KAS EF*\nUpdate ${tgl}\n━━━━━━━━━━━━━━━━━━━━\n`;
+  text += `💰 Saldo: Rp ${fmt(saldo)}\n📥 Masuk: Rp ${fmt(masukAllTime)} | \n📤 Keluar: Rp ${fmt(keluarAll)}\n📅 Masuk ${bulanSaja}: Rp ${fmt(masukBulanIni)} (${totalBayarBulanIni} orang)\n━━━━━━━━━━━━━━━━━━━━\n`;
+  text += `🏦 *REKENING:*\nBCA 6830747280 \nMANDIRI 1570005764080\n a.n Eka Iswanto\n━━━━━━━━━━━━━━━━━━━━\n`;
+  text += `Pembayaran ${bulanLabel}\n`;
+  text += `✅ *SUDAH* :\n`;
+  text += `BCA (${uniqPerBank.BCA.size} orang), ${namesPerBank.BCA.join(', ')||'-'}\n`;
+  text += `Mandiri (${uniqPerBank.MANDIRI.size} orang), ${namesPerBank.MANDIRI.join(', ')||'-'}\n`;
+  text += `Cash (${uniqPerBank.CASH.size} orang), ${namesPerBank.CASH.join(', ')||'-'}\n`;
+  text += `*BELUM*:\n`;
+  if(belum.length>0){ text += `${belum.join(', ')}\n`; } else { text += `Semua sudah lunas ✅\n`; }
+  try{ 
+    var _tr=(typeof cekHariRaya==='function')?cekHariRaya():null; 
+    if(_tr&&_tr.ucapan){ 
+      var _uc=(typeof stripHtml==='function')?stripHtml(_tr.ucapan(_tr.now)):'';
+      if(_uc){
+        var _tgl = _tr.now.toLocaleDateString('id-ID',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        // tambahkan tanggal hari nasionalnya
+        text += `\n${_uc}\n📅 ${_tgl}\n`;
+      }
+    }
+  }catch(e){}
+  try{
+    var _sp=(typeof cekTanggalSpesial==='function')?cekTanggalSpesial():[];
+    _sp.forEach(function(s){
+      var tglSp = '';
+      try{
+        // s.md = MM-DD, buat jadi tanggal tahun ini
+        var now = new Date();
+        var parts = s.md.split('-');
+        var d = new Date(now.getFullYear(), parseInt(parts[0])-1, parseInt(parts[1]));
+        tglSp = d.toLocaleDateString('id-ID',{day:'numeric', month:'long', year:'numeric'});
+      }catch(e){}
+      text += `\n${s.emoji||'🎉'} *${s.nama}*${tglSp?' - '+tglSp:''}\n${s.ucapan}\n`;
+    });
+  }catch(e){}
+  text += `\nCek: https://shorturl.at/JpfTW\n\nTerimakasih...\n`;
+  return text;
+}
+function updateSharePreview(){ 
+  var el=document.getElementById('previewShare'); 
+  var elB=document.getElementById('bulanLabelPreview');
+  if(el){ el.textContent=getShareText(); }
+  if(elB){ elB.textContent=mName(cur); }
+}
+function copyWA(){navigator.clipboard.writeText(getShareText()).then(()=>toast('Copy'));}
+function shareWA(){window.open("https://wa.me/?text="+encodeURIComponent(getShareText()),'_blank');}
+function exportPDF(){ toast('PDF segera'); }
+function render(){
+  var allMasuk=txs.filter(t=>t.jenis!=='keluar' && t.memberName!=="TEST").reduce((s,t)=>s+t.amount,0);
+  var keluarAll=txs.filter(t=>t.jenis==='keluar').reduce((s,t)=>s+t.amount,0);
+  document.getElementById('saldo').textContent='Rp '+fmt(allMasuk-keluarAll); 
+  document.getElementById('masuk').textContent='Rp '+fmt(allMasuk); 
+  document.getElementById('keluar').textContent='Rp '+fmt(keluarAll);
+  var mapAll={}; txs.filter(t=>t.jenis!=='keluar' && t.memberName!=="TEST" && t.memberName!=="").forEach(t=>{ if(t.memberName!=="Sisa saldo") mapAll[t.memberName]=(mapAll[t.memberName]||0)+t.amount; }); 
+  var rankWarna={}; (function(){ var arr=MEMBERS.map(function(n){return {name:n,total:mapAll[n]||0};}).filter(function(x){return x.total>0;}).sort(function(a,b){return a.total-b.total;}); var wc=['#ff6b6b','#ff9f43','#f9ca24']; for(var i=0;i<Math.min(3,arr.length);i++){ rankWarna[arr[i].name]=wc[i]; } })();
+  document.getElementById('listA').innerHTML=MEMBERS.map(name=>{ var total=mapAll[name]||0; var lunas = total>0; var rc=rankWarna[name]; var col=lunas?(rc||'#00b894'):'#8aa8be'; var icoCls=lunas&&!rc?'ok':''; var icoBg=rc?('background:'+rc+';color:#fff'):''; var icoTx=lunas?(rc?'!':'✓'):'✗'; return `<div class="row"><div style="display:flex;gap:10px;align-items:center"><div class="ico ${icoCls}" style="${icoBg}">${icoTx}</div><div><div style="font-weight:600">${name}</div></div></div><div style="font-weight:700;color:${col}">Rp ${fmt(total)}</div></div>`; }).join('');
+  document.getElementById('infoA').textContent=Object.keys(mapAll).filter(k=>mapAll[k]>0).length+"/"+MEMBERS.length;
+  if(localStorage.getItem(ADMIN)==='1'){ document.getElementById('loginBtn').classList.remove('hidden-admin'); document.getElementById('adminPanel').classList.add('show'); }else{ document.getElementById('loginBtn').classList.add('hidden-admin'); document.getElementById('adminPanel').classList.remove('show'); }
+  renderTx(); updateSharePreview();
+}
+function renderTx(){ ensureFilterBulanTahun();
+  var fBulan=document.getElementById('filterBulanTx').value; var fTahun=document.getElementById('filterTahunTx').value; var fJenis=document.getElementById('filterJenis').value; var fBank=document.getElementById('filterBank').value;
+  var filtered = txs.filter(t=>t.memberName!=="TEST" && t.memberName!=="").slice(); 
+  if(fBulan!=='all'){ filtered = filtered.filter(t=>{ var m = t.ym ? t.ym.split('-')[1] : ''; return m===fBulan; }); } 
+  if(fTahun!=='all'){ filtered = filtered.filter(t=>{ var y = t.ym ? t.ym.split('-')[0] : ''; return y===fTahun; }); } 
+  if(fJenis!=='all'){ filtered = filtered.filter(t=>t.jenis===fJenis); } 
+  if(fBank!=='all'){ filtered = filtered.filter(t=>t.bank===fBank); } 
+  filtered.sort((a,b)=> new Date(b.date)-new Date(a.date));
+  document.getElementById('infoT').textContent=filtered.length+' TRX'; 
+  if(txs.length===0){
+    var keyInfo = '';
+    try{ keyInfo = KEY; }catch(e){ keyInfo=''; }
+    document.getElementById('listT').innerHTML='<div style="padding:20px; text-align:center"><div style="font-size:28px; margin-bottom:8px">📭</div><div style="font-weight:600; font-size:13px">Data 0 - Belum ada transaksi</div><div style="font-size:11px; color:#888; margin-top:4px">Klik Sync untuk ambil dari Sheet</div><div style="display:flex; gap:8px; justify-content:center; margin-top:12px"><button onclick="forceSyncData()" style="border:1px solid #111; background:#111; color:#fff; border-radius:6px; padding:8px 12px; font-size:11px; font-weight:600; cursor:pointer">Sync Sheet</button><button onclick="loadSampleData()" style="border:1px solid #e5e5e5; background:#fff; color:#111; border-radius:6px; padding:8px 12px; font-size:11px; font-weight:600; cursor:pointer">Sample Data</button></div><div style="font-size:9px; color:#aaa; margin-top:12px">KEY: '+keyInfo+'</div></div>';
+    return;
+  }
+  if(filtered.length===0){ document.getElementById('listT').innerHTML='<div class="row"><div style="font-size:12px;color:#8aa8be">Tidak ada di filter ini - <button onclick="resetFilterTx()" style="border:none; background:none; color:#111; font-weight:600; text-decoration:underline; cursor:pointer; font-size:12px">Reset filter</button></div></div>'; return; }
+  var isAdmin = localStorage.getItem(ADMIN)==='1';
+  document.getElementById('listT').innerHTML=filtered.map(t=>{ 
+    var del=isAdmin?`<button class="del" onclick="askDel('${t.id}','${t.memberName}')">×</button>`:`<span style="width:32px"></span>`; 
+    var descHtml = t.customDesc ? `<div class="desc-baru"><i>'${t.customDesc}'</i></div>` : "";
+    var iconClass = t.jenis==='keluar' ? 'keluar' : 'ok';
+    var sign = t.jenis==='keluar' ? '-Rp ' : '+Rp ';
+    var isSisa = t.memberName==="Sisa saldo" ? ' style="background:#fff8e1"' : '';
+    return `<div class="row"${isSisa}><div style="display:flex;gap:10px;align-items:flex-start"><div class="ico ${iconClass}">${t.jenis==='keluar'?'−':'+'}</div><div><div style="font-weight:600;color:#0a2540">${t.memberName} • ${getBankLogo(t.bank)}</div><div style="font-size:11px;color:#0077b6;font-weight:700">${mName(t.ym)}</div>${descHtml}</div></div><div style="display:flex;gap:8px;align-items:center"><div style="font-weight:700;font-size:12px;color:${t.jenis==='keluar'?'#ff6b6b':'#0a2540'}">${sign}${fmt(t.amount)}</div>${del}</div></div>`; 
+  }).join('');
+}
+
+/* ===== TEMA HARI RAYA OTOMATIS ===== */
+var TEMA_RAYA = {
+  tahunbaru:{ pernak:['🎆','🎇','✨','🥳','🎉'], p:'#1a2a6c', d:'#0f1a4a', bg1:'#c9d6ff', bg2:'#fff6d6', aksen:'#d4a017',
+    ucapan:function(t){ return '🎆 Selamat Tahun Baru '+t.getFullYear()+'<br><span style="font-size:11px;font-weight:600">Semoga makin berkah & lancar rezekinya 🥳</span>'; } },
+  imlek:{ pernak:['🧧','🏮','🐉','🍊','✨'], p:'#b71c1c', d:'#7f0000', bg1:'#ffcdd2', bg2:'#fff9c4', aksen:'#f9a825',
+    ucapan:function(){ return '🧧 Gong Xi Fa Cai!<br><span style="font-size:11px;font-weight:600">Selamat Tahun Baru Imlek 🍊</span>'; } },
+  isramiraj:{ pernak:['🌙','⭐','🕌','✨','🤲'], p:'#00695c', d:'#004d40', bg1:'#b2dfdb', bg2:'#fff8e1', aksen:'#f9a825',
+    ucapan:function(){ return '🌙 Selamat Isra Mi\'raj Nabi Muhammad SAW<br><span style="font-size:11px;font-weight:600">Semoga syafaat & keberkahan menyertai ✨</span>'; } },
+  nyepi:{ pernak:['🕉️','🪷','🕯️','🌸'], p:'#37474f', d:'#263238', bg1:'#cfd8dc', bg2:'#fffde7', aksen:'#fbc02d',
+    ucapan:function(){ return '🕉️ Selamat Hari Raya Nyepi<br><span style="font-size:11px;font-weight:600">Catur Brata Penyepian - Damai di hati 🪷</span>'; } },
+  wafatisa:{ pernak:['✝️','🕊️','🙏','✨'], p:'#4a148c', d:'#311b92', bg1:'#d1c4e9', bg2:'#f3e5f5', aksen:'#ab47bc',
+    ucapan:function(){ return '✝️ Selamat Memperingati Wafat Isa Al-Masih<br><span style="font-size:11px;font-weight:600">Damai & kasih untuk kita semua</span>'; } },
+  paskah:{ pernak:['✝️','🕊️','🌷','✨'], p:'#6a1b9a', d:'#4a148c', bg1:'#e1bee7', bg2:'#fff8e1', aksen:'#ff8f00',
+    ucapan:function(){ return '✝️ Selamat Hari Paskah<br><span style="font-size:11px;font-weight:600">Semoga kebangkitan membawa harapan baru 🕊️</span>'; } },
+  idulfitri:{ pernak:['🌙','🕌','💚','✨','🤲'], p:'#1b5e20', d:'#0d3311', bg1:'#c8e6c9', bg2:'#fffde7', aksen:'#f9a825',
+    ucapan:function(t){ return '🌙 Selamat Hari Raya Idul Fitri '+(t.getFullYear()-579)+' H<br><span style="font-size:11px;font-weight:600">Mohon maaf lahir & batin 🙏</span>'; } },
+  waisak:{ pernak:['☸️','🪷','🕯️','✨'], p:'#e65100', d:'#bf360c', bg1:'#ffcc80', bg2:'#fffde7', aksen:'#ffd54f',
+    ucapan:function(){ return '☸️ Selamat Hari Raya Waisak<br><span style="font-size:11px;font-weight:600">Semoga kedamaian & kebijaksanaan menyertai 🪷</span>'; } },
+  kenaikanisa:{ pernak:['✝️','🕊️','☁️','✨'], p:'#01579b', d:'#002f6c', bg1:'#81d4fa', bg2:'#fff9c4', aksen:'#fbc02d',
+    ucapan:function(){ return '✝️ Selamat Kenaikan Isa Al-Masih<br><span style="font-size:11px;font-weight:600">Damai sejahtera menyertai kita 🕊️</span>'; } },
+  iduladha:{ pernak:['🕌','🐑','🌙','✨','🤲'], p:'#00695c', d:'#004d40', bg1:'#a7ffeb', bg2:'#fffde7', aksen:'#ffb300',
+    ucapan:function(){ return '🕌 Selamat Hari Raya Idul Adha<br><span style="font-size:11px;font-weight:600">Semoga berkah & diterima amal ibadahnya</span>'; } },
+  tahunbaruislam:{ pernak:['🌙','⭐','🕌','✨'], p:'#1b5e20', d:'#0a2f0a', bg1:'#a5d6a7', bg2:'#fff8e1', aksen:'#f9a825',
+    ucapan:function(t){ return '🌙 Selamat Tahun Baru Islam '+(t.getFullYear()-578)+' H<br><span style="font-size:11px;font-weight:600">Muharram penuh berkah ✨</span>'; } },
+  maulid:{ pernak:['🌙','🕌','💚','✨','ﷺ'], p:'#2e7d32', d:'#1b5e20', bg1:'#a5d6a7', bg2:'#fff9c4', aksen:'#fbc02d',
+    ucapan:function(){ return '🌙 Selamat Maulid Nabi Muhammad SAW<br><span style="font-size:11px;font-weight:600">Semoga teladan beliau menyinari kita ﷺ</span>'; } },
+  buruh:{ pernak:['👷','🔨','💪','🇮🇩'], p:'#b71c1c', d:'#7f0000', bg1:'#ef9a9a', bg2:'#ffffff', aksen:'#e53935',
+    ucapan:function(){ return '👷 Selamat Hari Buruh Nasional<br><span style="font-size:11px;font-weight:600">Terima kasih pejuang nafkah! 💪</span>'; } },
+  pancasila:{ pernak:['🇮🇩','🦅','🌟','✨'], p:'#b71c1c', d:'#7f0000', bg1:'#ffcdd2', bg2:'#ffecb3', aksen:'#ff6f00',
+    ucapan:function(){ return '🇮🇩 Selamat Hari Lahir Pancasila<br><span style="font-size:11px;font-weight:600">Pancasila Jiwa Pemersatu Bangsa!</span>'; } },
+  merdeka:{ pernak:['🇮🇩','🎉','🎊','✨','🔥'], p:'#b71c1c', d:'#880000', bg1:'#ff8a80', bg2:'#ffffff', aksen:'#d50000',
+    ucapan:function(t){ return '🇮🇩 Dirgahayu Republik Indonesia ke-'+(t.getFullYear()-1945)+'<br><span style="font-size:11px;font-weight:600">Merdeka! 🎉</span>'; } },
+  natal:{ pernak:['🎄','🎅','❄️','🎁','⭐'], p:'#b71c1c', d:'#1b5e20', bg1:'#ffcdd2', bg2:'#c8e6c9', aksen:'#2e7d32',
+    ucapan:function(t){ return '🎄 Selamat Hari Natal '+t.getFullYear()+'<br><span style="font-size:11px;font-weight:600">Damai & sukacita untuk kita semua ✨</span>'; } },
+  batik:{ pernak:['👘','🌺','✨','🇮🇩'], p:'#4e342e', d:'#3e2723', bg1:'#d7ccc8', bg2:'#fff8e1', aksen:'#ff6f00',
+    ucapan:function(){ return '👘 Selamat Hari Batik Nasional<br><span style="font-size:11px;font-weight:600">Bangga pakai batik, bangga jadi Indonesia! 🇮🇩</span>'; } },
+  kartini:{ pernak:['👩‍🎓','🌸','✨','💐'], p:'#ad1457', d:'#880e4f', bg1:'#f8bbd0', bg2:'#fce4ec', aksen:'#ec407a',
+    ucapan:function(){ return '👩‍🎓 Selamat Hari Kartini<br><span style="font-size:11px;font-weight:600">Habis gelap terbitlah terang ✨</span>'; } },
+  pendidikan:{ pernak:['📚','🎓','✏️','✨'], p:'#0d47a1', d:'#002171', bg1:'#90caf9', bg2:'#fff9c4', aksen:'#f9a825',
+    ucapan:function(){ return '📚 Selamat Hari Pendidikan Nasional<br><span style="font-size:11px;font-weight:600">Tuntutlah ilmu setinggi langit! 🎓</span>'; } },
+  kebangkitan:{ pernak:['🇮🇩','🔥','💪','✨'], p:'#b71c1c', d:'#880e4f', bg1:'#ef9a9a', bg2:'#ffecb3', aksen:'#ff6f00',
+    ucapan:function(){ return '🇮🇩 Selamat Hari Kebangkitan Nasional<br><span style="font-size:11px;font-weight:600">Bangkit untuk Indonesia Emas!</span>'; } },
+  pramuka:{ pernak:['⚜️','🏕️','🔥','✨'], p:'#4a148c', d:'#311b92', bg1:'#ce93d8', bg2:'#fff9c4', aksen:'#f9a825',
+    ucapan:function(){ return '⚜️ Selamat Hari Pramuka<br><span style="font-size:11px;font-weight:600">Satyaku Kudarmakan, Darmaku Kubaktikan!</span>'; } },
+  kesaktian:{ pernak:['🇮🇩','🛡️','⭐','✨'], p:'#b71c1c', d:'#4a0000', bg1:'#ef9a9a', bg2:'#fffde7', aksen:'#ff6f00',
+    ucapan:function(){ return '🇮🇩 Selamat Hari Kesaktian Pancasila<br><span style="font-size:11px;font-weight:600">Pancasila Sakti, Indonesia Jaya!</span>'; } },
+  sumpahpemuda:{ pernak:['🇮🇩','🔥','🤝','✨'], p:'#bf360c', d:'#870000', bg1:'#ffab91', bg2:'#ffecb3', aksen:'#ff6f00',
+    ucapan:function(){ return '🇮🇩 Selamat Hari Sumpah Pemuda<br><span style="font-size:11px;font-weight:600">Bersatu, Bangkit, dan Tumbuh! 🔥</span>'; } },
+  pahlawan:{ pernak:['🎖️','🇮🇩','🕯️','⭐'], p:'#263238', d:'#000000', bg1:'#b0bec5', bg2:'#ffcdd2', aksen:'#b71c1c',
+    ucapan:function(){ return '🎖️ Selamat Hari Pahlawan<br><span style="font-size:11px;font-weight:600">Jasamu abadi, semangatmu menginspirasi 🇮🇩</span>'; } },
+  guru:{ pernak:['👨‍🏫','📚','✨','🙏'], p:'#004d40', d:'#00251a', bg1:'#80cbc4', bg2:'#fff8e1', aksen:'#ffb300',
+    ucapan:function(){ return '👨‍🏫 Selamat Hari Guru Nasional<br><span style="font-size:11px;font-weight:600">Terima kasih pahlawan tanpa tanda jasa 🙏</span>'; } },
+  ibu:{ pernak:['🤱','❤️','🌸','✨'], p:'#880e4f', d:'#560027', bg1:'#f48fb1', bg2:'#fce4ec', aksen:'#ec407a',
+    ucapan:function(){ return '🤱 Selamat Hari Ibu<br><span style="font-size:11px;font-weight:600">Kasih ibu sepanjang masa ❤️</span>'; } }
+};
+var KALENDER_RAYA = [
+  { k:'tahunbaru', tgl:['01-01'], min:-3, plus:3 },
+  { k:'imlek', tgl:['2025-01-29','2026-02-17','2027-02-06','2028-01-26','2029-02-13','2030-02-03'], min:-3, plus:3 },
+  { k:'isramiraj', tgl:['2025-01-27','2026-01-16','2027-01-08','2028-12-28','2029-12-17','2030-12-07'], min:-3, plus:3 },
+  { k:'nyepi', tgl:['2025-03-29','2026-03-19','2027-03-08','2028-03-26','2029-03-16','2030-03-05'], min:-3, plus:3 },
+  { k:'wafatisa', tgl:['2025-04-18','2026-04-03','2027-03-26','2028-04-14','2029-03-30','2030-04-19'], min:-3, plus:3 },
+  { k:'paskah', tgl:['2025-04-20','2026-04-05','2027-03-28','2028-04-16','2029-04-01','2030-04-21'], min:-3, plus:3 },
+  { k:'idulfitri', tgl:['2025-03-31','2026-03-20','2027-03-10','2028-02-28','2029-02-14','2030-02-04'], min:-3, plus:3 },
+  { k:'waisak', tgl:['2025-05-12','2026-05-02','2027-05-20','2028-05-09','2029-04-29','2030-05-17'], min:-3, plus:3 },
+  { k:'kenaikanisa', tgl:['2025-05-29','2026-05-14','2027-05-06','2028-05-25','2029-05-10','2030-05-30'], min:-3, plus:3 },
+  { k:'iduladha', tgl:['2025-06-07','2026-05-27','2027-05-17','2028-05-05','2029-04-24','2030-04-13'], min:-3, plus:3 },
+  { k:'tahunbaruislam', tgl:['2025-06-27','2026-06-16','2027-06-06','2028-05-26','2029-05-15','2030-05-05'], min:-3, plus:3 },
+  { k:'maulid', tgl:['2025-09-05','2026-08-25','2027-08-15','2028-08-03','2029-07-24','2030-07-13'], min:-3, plus:3 },
+  { k:'buruh', tgl:['05-01'], min:-3, plus:3 },
+  { k:'pancasila', tgl:['06-01'], min:-3, plus:3 },
+  { k:'merdeka', tgl:['08-17'], min:-3, plus:3 },
+  { k:'natal', tgl:['12-25'], min:-3, plus:3 },
+  { k:'batik', tgl:['10-02'], min:-2, plus:2 },
+  { k:'kartini', tgl:['04-21'], min:-2, plus:2 },
+  { k:'pendidikan', tgl:['05-02'], min:-2, plus:2 },
+  { k:'kebangkitan', tgl:['05-20'], min:-2, plus:2 },
+  { k:'pramuka', tgl:['08-14'], min:-2, plus:2 },
+  { k:'kesaktian', tgl:['10-01'], min:-2, plus:2 },
+  { k:'sumpahpemuda', tgl:['10-28'], min:-2, plus:2 },
+  { k:'pahlawan', tgl:['11-10'], min:-2, plus:2 },
+  { k:'guru', tgl:['11-25'], min:-2, plus:2 },
+  { k:'ibu', tgl:['12-22'], min:-2, plus:2 }
+];
+function cekHariRaya(){
+  var now = new Date(); now.setHours(0,0,0,0);
+  for(var i=0;i<KALENDER_RAYA.length;i++){
+    var r = KALENDER_RAYA[i];
+    for(var j=0;j<r.tgl.length;j++){
+      var d = r.tgl[j].length===5 ? (now.getFullYear()+'-'+r.tgl[j]) : r.tgl[j];
+      var base = new Date(d+'T00:00:00');
+      var awal = new Date(base); awal.setDate(awal.getDate()+r.min);
+      var akhir = new Date(base); akhir.setDate(akhir.getDate()+r.plus);
+      if(now>=awal && now<=akhir){ var t=TEMA_RAYA[r.k]; t.key=r.k; t.now=now; return t; }
+    }
+  }
+  return null;
+}
+function terapkanTemaRaya(){
+  var t = cekHariRaya();
+  if(!t) return;
+  try{ document.body.classList.add('tema-'+t.key); }catch(e){}
+  var css = ''
+    + 'body{background:linear-gradient(135deg,'+t.bg1+' 0%,'+t.bg2+' 60%, #ffffff 100%) fixed !important; min-height:100vh}'
+    + 'body::after{content:""; position:fixed; inset:0; pointer-events:none; opacity:0.07; background-image:radial-gradient('+t.p+' 1.5px, transparent 1.5px); background-size:22px 22px; z-index:-1}'
+    + '.top{background:linear-gradient(180deg,'+t.bg1+'F2 0%, '+t.bg2+'E6 100%); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:2px solid '+t.p+'22; box-shadow:0 4px 20px '+t.p+'14}'
+    + '.logo{color:'+t.p+'; text-shadow:0 1px 0 rgba(255,255,255,.8); letter-spacing:.5px}'
+    + '.btn{color:'+t.p+';border-color:'+t.p+'22; background:rgba(255,255,255,.7)}'
+    + '.btn:hover{background:'+t.bg1+'; border-color:'+t.p+'44}'
+    + '.btn-pdf{background:'+t.p+' !important; color:#fff !important; border-color:'+t.p+' !important}'
+    + '.top{border-bottom-color:'+t.p+'22}'
+    + '.h,.filter-label,.admin-col h4{color:'+t.p+'}'
+    + '.ico{background:linear-gradient(135deg,'+t.bg1+','+t.bg2+');color:'+t.p+'; border:1px solid '+t.p+'14}'
+    + '.ico.ok{background:linear-gradient(135deg,'+t.p+','+t.d+')!important; color:#fff !important; box-shadow:0 4px 12px '+t.p+'44}'
+    + '.tabs{background:'+t.bg1+'AA; backdrop-filter:blur(8px); border:1px solid '+t.p+'14}'
+    + '.tabs button.active{background:'+t.p+';border-color:'+t.p+'; color:#fff; box-shadow:0 4px 12px '+t.p+'33}'
+    + '.toast{background:'+t.p+'}'
+    + '.sel,.inp{border-color:'+t.p+'2e; background:rgba(255,255,255,.85)}'
+    + '.sel:focus,.inp:focus{border-color:'+t.p+'; box-shadow:0 0 0 3px '+t.p+'22}'
+    + '.pull{color:'+t.p+'}'
+    + '.card,.bank-chip,.list,.filter-transaksi,.admin{border-color:'+t.p+'14; background:rgba(255,255,255,.92); backdrop-filter:blur(6px)}'
+    + '.card b{color:'+t.p+'}'
+    + '#areaHariRaya .banner-raya{border:1px solid rgba(255,255,255,.6); position:relative; overflow:hidden}'
+    + '.pernak-wrap{position:fixed; inset:0; pointer-events:none; z-index:5; overflow:hidden}'
+    + '.pernak{position:absolute; font-size:22px; animation:pernakJatuh linear infinite; opacity:0.85; filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}'
+    + '@keyframes pernakJatuh{0%{transform:translateY(-10vh) rotate(0deg) translateX(0); opacity:0} 10%{opacity:0.9} 90%{opacity:0.8} 100%{transform:translateY(110vh) rotate(360deg) translateX(30px); opacity:0}}'
+    + '.lampion{position:absolute; top:-10px; font-size:28px; animation:lampionGoyang 3s ease-in-out infinite; transform-origin:center bottom}'
+    + '@keyframes lampionGoyang{0%,100%{transform:rotate(-5deg) translateY(0)} 50%{transform:rotate(5deg) translateY(4px)}}'
+    + '.confetti{position:absolute; width:8px; height:8px; background:'+t.p+'; animation:confettiFall 4s linear infinite}'
+    + '@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0deg); opacity:1} 100%{transform:translateY(110vh) rotate(720deg); opacity:0}}'
+    + '.bintang-kedip{position:absolute; font-size:10px; color:'+t.aksen+'; animation:kedip 1.5s ease-in-out infinite}'
+    + '@keyframes kedip{0%,100%{opacity:0.2; transform:scale(0.8)} 50%{opacity:1; transform:scale(1.2)}}';
+  var st = document.createElement('style');
+  st.id = 'temaRayaStyle'; st.textContent = css;
+  document.head.appendChild(st);
+  var top = document.querySelector('.top');
+  if(top && !document.querySelector('.banner-raya')){
+    var b = document.createElement('div');
+    b.className = 'banner-raya';
+    b.style.background = 'linear-gradient(135deg,'+t.p+','+t.d+')';
+    b.style.margin = '0';
+    var tglBanner = '';
+    try{ tglBanner = t.now.toLocaleDateString('id-ID',{weekday:'long', day:'numeric', month:'long', year:'numeric'}); }catch(e){}
+    b.innerHTML = '<span style="position:relative; z-index:2">'+t.ucapan(t.now) + (tglBanner ? '<br><span style="font-size:10px;font-weight:600;opacity:.9">📅 '+tglBanner+'</span>' : '') + '</span>';
+    // pernak di dalam banner
+    var deco = document.createElement('div');
+    deco.style.cssText='position:absolute; inset:0; pointer-events:none; opacity:0.25; font-size:18px; overflow:hidden';
+    var emojis = (t.pernak||['✨','🎉','🌟']);
+    deco.innerHTML = '<span style="position:absolute; left:8px; top:6px">'+(emojis[0]||'✨')+'</span><span style="position:absolute; right:10px; top:8px">'+(emojis[1]||'🎉')+'</span><span style="position:absolute; left:22%; bottom:4px; font-size:14px">'+(emojis[2]||'🌟')+'</span>';
+    b.appendChild(deco);
+    var area = document.getElementById('areaHariRaya');
+    if(area) area.appendChild(b); else top.insertAdjacentElement('afterend', b);
+  }
+  var mt = document.querySelector('meta[name="theme-color"]');
+  if(!mt){ mt=document.createElement('meta'); mt.name='theme-color'; document.head.appendChild(mt); }
+  mt.content = t.p;
+  // === BUAT PERNAK-PERNIK JATUH ===
+  try{ buatPernakPernik(t); }catch(e){}
+}
+function buatPernakPernik(t){
+  if(document.querySelector('.pernak-wrap')) return;
+  var wrap = document.createElement('div');
+  wrap.className = 'pernak-wrap';
+  document.body.appendChild(wrap);
+  var emojis = t.pernak || ['✨','🎉','🌟','💫'];
+  var count = (t.key==='natal'||t.key==='tahunbaru'||t.key==='merdeka')? 18 : 12;
+  for(var i=0;i<count;i++){
+    var el = document.createElement('div');
+    el.className = 'pernak';
+    el.textContent = emojis[i % emojis.length];
+    el.style.left = (Math.random()*100)+'vw';
+    el.style.animationDuration = (3 + Math.random()*4)+'s';
+    el.style.animationDelay = (Math.random()*5)+'s';
+    el.style.fontSize = (14 + Math.random()*18)+'px';
+    wrap.appendChild(el);
+  }
+  // confetti kecil warna tema
+  if(['tahunbaru','merdeka','natal','imlek','idulfitri'].includes(t.key)){
+    for(var j=0;j<10;j++){
+      var c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = (Math.random()*100)+'vw';
+      c.style.background = j%2===0 ? t.p : t.aksen;
+      c.style.animationDuration = (2+Math.random()*3)+'s';
+      c.style.animationDelay = (Math.random()*2)+'s';
+      c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
+      wrap.appendChild(c);
+    }
+  }
+  // lampion untuk imlek
+  if(t.key==='imlek'){
+    for(var k=0;k<3;k++){
+      var l = document.createElement('div');
+      l.className = 'lampion';
+      l.textContent = '🏮';
+      l.style.left = (15 + k*35)+'vw';
+      l.style.animationDelay = (k*0.5)+'s';
+      wrap.appendChild(l);
+    }
+  }
+  // ketupat untuk idul fitri
+  if(t.key==='idulfitri'){
+    for(var k2=0;k2<3;k2++){
+      var kt = document.createElement('div');
+      kt.className = 'lampion';
+      kt.textContent = '💚';
+      kt.style.left = (20 + k2*30)+'vw';
+      kt.style.top = '48px';
+      kt.style.fontSize='20px';
+      wrap.appendChild(kt);
+    }
+  }
+  // bintang kedip untuk natal & tahun baru
+  if(['natal','tahunbaru','isramiraj'].includes(t.key)){
+    for(var s=0;s<8;s++){
+      var b = document.createElement('div');
+      b.className='bintang-kedip';
+      b.textContent='⭐';
+      b.style.left=(Math.random()*100)+'vw';
+      b.style.top=(Math.random()*40)+'vh';
+      b.style.animationDelay=(Math.random()*2)+'s';
+      wrap.appendChild(b);
+    }
+  // === MUSIK RAYA ===
+  try{ initMusikRaya(t); }catch(e){}
+}
+
+function initMusikRaya(t){
+  // cek mute
+  var muted = localStorage.getItem('kas-ef-musik-muted')==='1';
+  // tambahkan tombol musik di banner
+  setTimeout(function(){
+    var banner = document.querySelector('.banner-raya');
+    if(!banner || document.getElementById('btnMusikRaya')) return;
+    var btn = document.createElement('button');
+    btn.id='btnMusikRaya';
+    btn.textContent = muted ? '🔇' : '🔔';
+    btn.title = muted ? 'Aktifkan musik' : 'Matikan musik';
+    btn.style.cssText='position:absolute; right:8px; top:8px; background:rgba(255,255,255,.85); border:none; border-radius:50%; width:28px; height:28px; font-size:14px; cursor:pointer; z-index:3; box-shadow:0 2px 8px rgba(0,0,0,.15)';
+    btn.onclick = function(e){
+      e.stopPropagation();
+      var isMuted = localStorage.getItem('kas-ef-musik-muted')==='1';
+      if(isMuted){
+        localStorage.removeItem('kas-ef-musik-muted');
+        btn.textContent='🔔';
+        playRayaSound(t, true);
+      }else{
+        localStorage.setItem('kas-ef-musik-muted','1');
+        btn.textContent='🔇';
+      }
+    };
+    banner.style.position='relative';
+    banner.appendChild(btn);
+  }, 600);
+
+  // autoplay hanya setelah interaksi user (klik pertama)
+  if(muted) return;
+  var sudahMain = sessionStorage.getItem('kas-ef-musik-played-'+t.key);
+  if(sudahMain) return;
+  
+  var playOnFirstClick = function(){
+    if(localStorage.getItem('kas-ef-musik-muted')==='1') return;
+    playRayaSound(t, false);
+    sessionStorage.setItem('kas-ef-musik-played-'+t.key, '1');
+    document.removeEventListener('click', playOnFirstClick);
+    document.removeEventListener('touchstart', playOnFirstClick);
+  };
+  document.addEventListener('click', playOnFirstClick, {once:true});
+  document.addEventListener('touchstart', playOnFirstClick, {once:true});
+}
+
+function playRayaSound(t, isClick){
+  try{
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    var ctx = new AudioCtx();
+    var now = ctx.currentTime;
+    var masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0.25, now);
+    masterGain.connect(ctx.destination);
+
+    // Melodi per hari raya (frekuensi Hz)
+    var melodies = {
+      tahunbaru: [523,659,784,1046, 784,1046, 1046],
+      imlek: [659,698,659,523, 659,784,659,523],
+      idulfitri: [392,440,493,523, 659,523,440,392],
+      iduladha: [392,440,493,523, 587,659,587,523],
+      natal: [659,659,659, 659,659,659, 659,784,523,587,659],
+      merdeka: [523,523,659,784, 784,659,523,587,523],
+      pahlawan: [440,440,523,440, 349,392,440],
+      batik: [523,587,659,587, 523,587,659],
+      default: [523,659,784,659]
+    };
+    var notes = melodies[t.key] || melodies[t.key.replace(/[^a-z]/g,'')] || melodies.default;
+    if(t.key.includes('pancasila')||t.key.includes('sumpah')||t.key.includes('kebangkitan')||t.key.includes('kesaktian')) notes = melodies.merdeka;
+    if(t.key.includes('isra')||t.key.includes('maulid')||t.key.includes('tahunbaruislam')) notes = melodies.idulfitri;
+    if(t.key.includes('wafat')||t.key.includes('paskah')||t.key.includes('kenaikan')) notes = [523,659,784,1046];
+    if(t.key.includes('kartini')||t.key.includes('ibu')||t.key.includes('guru')||t.key.includes('pendidikan')) notes = melodies.batik;
+
+    notes.forEach(function(freq, i){
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      osc.type = (t.key==='natal'||t.key==='tahunbaru') ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, now + i*0.22);
+      g.gain.setValueAtTime(0, now + i*0.22);
+      g.gain.linearRampToValueAtTime(0.35, now + i*0.22 + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.01, now + i*0.22 + 0.35);
+      osc.connect(g); g.connect(masterGain);
+      osc.start(now + i*0.22);
+      osc.stop(now + i*0.22 + 0.4);
+    });
+
+    // efek lonceng untuk idul fitri & natal
+    if(['idulfitri','iduladha','natal','tahunbaru'].includes(t.key)){
+      setTimeout(function(){
+        var osc2 = ctx.createOscillator();
+        var g2 = ctx.createGain();
+        osc2.frequency.setValueAtTime(1046, ctx.currentTime);
+        g2.gain.setValueAtTime(0.3, ctx.currentTime);
+        g2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime+1.5);
+        osc2.connect(g2); g2.connect(masterGain);
+        osc2.start(); osc2.stop(ctx.currentTime+1.5);
+      }, notes.length*220+200);
+    }
+  }catch(e){ console.log('audio error', e); }
+}
+
+
+/* ===== END TEMA HARI RAYA ===== */
+
+
+/* ===== NOTIF TANGGAL MERAH KE WA GRUP ===== */
+var KALENDER_MERAH = [
+  {nama:'Tahun Baru Masehi', tgl:['01-01']},
+  {nama:'Isra Mikraj Nabi Muhammad SAW', tgl:['2025-01-27','2026-01-16','2027-01-05']},
+  {nama:'Tahun Baru Imlek', tgl:['2025-01-29','2026-02-17','2027-02-06']},
+  {nama:'Hari Raya Nyepi', tgl:['2025-03-29','2026-03-19','2027-03-08']},
+  {nama:'Hari Raya Idul Fitri', tgl:['2025-03-31','2025-04-01','2026-03-20','2026-03-21','2027-03-10','2027-03-11']},
+  {nama:'Wafat Yesus Kristus', tgl:['2025-04-18','2026-04-03','2027-03-26']},
+  {nama:'Hari Buruh Internasional', tgl:['05-01']},
+  {nama:'Hari Raya Waisak', tgl:['2025-05-12','2026-05-31','2027-05-20']},
+  {nama:'Kenaikan Yesus Kristus', tgl:['2025-05-29','2026-05-14','2027-05-06']},
+  {nama:'Hari Raya Idul Adha', tgl:['2025-06-06','2026-05-27','2027-05-17']},
+  {nama:'Tahun Baru Islam 1 Muharram', tgl:['2025-06-27','2026-06-16','2027-06-06']},
+  {nama:'Hari Kemerdekaan RI', tgl:['08-17']},
+  {nama:'Maulid Nabi Muhammad SAW', tgl:['2025-09-05','2026-08-26','2027-08-15']},
+  {nama:'Hari Raya Natal', tgl:['12-25']}
+];
+function cekTanggalMerah(){
+  var now = new Date();
+  var key = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  for(var i=0;i<KALENDER_MERAH.length;i++){
+    var r = KALENDER_MERAH[i];
+    for(var j=0;j<r.tgl.length;j++){
+      var d = r.tgl[j].length===5 ? (now.getFullYear()+'-'+r.tgl[j]) : r.tgl[j];
+      if(d===key) return r.nama;
+    }
+  }
+  return null;
+}
+function stripHtml(s){ return String(s).replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]*>/g,''); }
+function notifTanggalMerah(){
+  var nama = cekTanggalMerah();
+  if(!nama) return;
+  var now = new Date();
+  var tglIndo = now.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var tema = (typeof cekHariRaya==='function') ? cekHariRaya() : null;
+  var ucapan = tema ? stripHtml(tema.ucapan(tema.now)) : 'Selamat memperingati '+nama+'! 🙏';
+  var pesan = '🔴 *INFO TANGGAL MERAH*\n📅 '+tglIndo+'\n🎉 '+nama+'\n\n'+ucapan+'\n\n— *KAS EF*';
+  window._pesanMerah = pesan;
+  var btnHtml = '<br><button onclick="kirimNotifMerah()" style="margin-top:10px;background:#fff;border:none;border-radius:999px;padding:10px 20px;font-weight:800;font-size:12px;cursor:pointer;color:#0a2540">📤 Kirim ke Grup WA</button>';
+  var banner = document.querySelector('.banner-raya');
+  if(banner){
+    if(!banner.querySelector('button')) banner.insertAdjacentHTML('beforeend', btnHtml);
+  } else {
+    var top = document.querySelector('.top');
+    if(top){
+      var b = document.createElement('div');
+      b.className = 'banner-raya';
+      b.style.background = 'linear-gradient(135deg,#d42a2a,#a01e1e)';
+      b.innerHTML = '🔴 Hari ini tanggal merah!<br><span style="font-size:11px;font-weight:600">'+nama+' — '+tglIndo+'</span>'+btnHtml;
+          var area = document.getElementById('areaHariRaya');
+    if(area) area.appendChild(b); else var area2=document.getElementById('areaHariRaya'); if(area2) area2.appendChild(b); else top.insertAdjacentElement('afterend', b);
+    }
+  }
+}
+function kirimNotifMerah(){
+  window.open('https://wa.me/?text='+encodeURIComponent(window._pesanMerah||''), '_blank');
+}
+/* ===== END NOTIF TANGGAL MERAH ===== */
+
+
+function renderMemberList(){
+  refreshMembers();
+  var list=document.getElementById('memberList');
+  var count=document.getElementById('countAnggota');
+  if(!list) return;
+  count.textContent=MEMBERS.length;
+  list.innerHTML=MEMBERS.map((m,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px 12px;border-radius:12px;border:1px solid rgba(0,180,216,0.1)"><span style="font-weight:700">${i+1}. ${m}</span><button class="del" style="width:28px;height:28px;font-size:14px" onclick="removeMember(${i})">×</button></div>`).join('');
+  var mem=document.getElementById('memberMasuk');
+  if(mem){ var curVal=mem.value; mem.innerHTML=MEMBERS.map(m=>`<option value="${m}">${m}</option>`).join(''); if(MEMBERS.includes(curVal)) mem.value=curVal; }
+}
+function addMember(){
+  var inp=document.getElementById('newMemberName');
+  var name=(inp.value||'').trim();
+  if(!name){ toast('Isi nama dulu'); return; }
+  name=name.charAt(0).toUpperCase()+name.slice(1);
+  refreshMembers();
+  if(MEMBERS.map(x=>x.toLowerCase()).includes(name.toLowerCase())){ toast('Sudah ada'); return; }
+  MEMBERS.push(name); saveMembers(MEMBERS);
+  inp.value='';
+  renderMemberList(); render();
+  toast(name+' ditambah ✓');
+}
+function removeMember(idx){
+  refreshMembers();
+  var name=MEMBERS[idx];
+  if(!confirm('Hapus '+name+'? Transaksi lama tetap ada.')) return;
+  MEMBERS.splice(idx,1); saveMembers(MEMBERS);
+  renderMemberList(); render();
+  toast(name+' dihapus');
+}
+function resetMembers(){
+  if(!confirm('Reset ke 17 anggota default?')) return;
+  MEMBERS=DEFAULT_MEMBERS.slice(); saveMembers(MEMBERS);
+  renderMemberList(); render();
+  toast('Reset ke '+DEFAULT_MEMBERS.length+' ✓');
+}
+function exportMembers(){
+  refreshMembers();
+  navigator.clipboard.writeText(MEMBERS.join(', ')).then(()=>toast('List disalin'));
+}
+var _oldNorm=norm;
+norm=function(n){
+  if(!n) return "";
+  refreshMembers();
+  var k=n.toLowerCase().trim().replace(/^pak\s+/,'');
+  if(MAP[k]) return MAP[k];
+  for(var i=0;i<MEMBERS.length;i++){ if(MEMBERS[i].toLowerCase()===k) return MEMBERS[i]; }
+  if(k==="test"||k==="contoh") return "";
+  if(k.toLowerCase().includes("sisa saldo")) return "Sisa saldo";
+  return n.charAt(0).toUpperCase()+n.slice(1).toLowerCase();
+};
+
+
+/* ===== TANGGAL SPESIAL GRUP ===== */
+var SPESIAL_KEY="kas-ef-spesial-v1";
+function getSpesial(){ try{ var s=localStorage.getItem(SPESIAL_KEY); if(s){ var a=JSON.parse(s); if(Array.isArray(a)) return a; } }catch(e){} return []; }
+function saveSpesial(a){ localStorage.setItem(SPESIAL_KEY, JSON.stringify(a)); }
+function renderSpesialList(){
+  var arr=getSpesial();
+  var list=document.getElementById('spesialList');
+  var count=document.getElementById('countSpesial');
+  if(!list) return;
+  count.textContent=arr.length;
+  if(!arr.length){ list.innerHTML='<div style="font-size:11px;color:#8aa8be;text-align:center;padding:12px">Belum ada tanggal spesial.<br>Contoh: Ultah anggota, anniversary grup.</div>'; return; }
+  var namaBulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  list.innerHTML=arr.map((s,i)=>{
+    var p=s.md.split('-'); var tglTxt=p[1]+' '+namaBulan[parseInt(p[0],10)-1];
+    return `<div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,159,67,0.25)">
+      <div><div style="font-weight:700;font-size:12px">${s.emoji||'🎉'} ${s.nama}</div>
+      <div style="font-size:10px;color:#8aa8be">📅 ${tglTxt} • tiap tahun</div>
+      <div style="font-size:10px;color:#8aa8be;font-style:italic">${(s.ucapan||'').substring(0,60)}${(s.ucapan||'').length>60?'...':''}</div></div>
+      <button class="del" style="width:28px;height:28px;font-size:14px" onclick="removeSpesial(${i})">×</button></div>`;
+  }).join('');
+}
+function addSpesial(){
+  var nama=(document.getElementById('spNama').value||'').trim();
+  var tgl=document.getElementById('spTgl').value;
+  var emoji=(document.getElementById('spEmoji').value||'').trim()||'🎉';
+  var ucapan=(document.getElementById('spUcapan').value||'').trim();
+  if(!nama){ toast('Isi nama acara dulu'); return; }
+  if(!tgl){ toast('Pilih tanggal dulu'); return; }
+  if(!ucapan){ ucapan='Selamat '+nama+'! 🎉'; }
+  var md=tgl.substring(5);
+  var arr=getSpesial();
+  arr.push({nama:nama, md:md, emoji:emoji, ucapan:ucapan});
+  arr.sort((a,b)=>a.md<b.md?-1:1);
+  saveSpesial(arr);
+  document.getElementById('spNama').value=''; document.getElementById('spTgl').value='';
+  document.getElementById('spEmoji').value=''; document.getElementById('spUcapan').value='';
+  renderSpesialList();
+  toast('Tanggal spesial ditambah ✓');
+}
+function removeSpesial(i){
+  var arr=getSpesial();
+  if(!confirm('Hapus "'+arr[i].nama+'"?')) return;
+  arr.splice(i,1); saveSpesial(arr); renderSpesialList();
+  toast('Dihapus');
+}
+function cekTanggalSpesial(){
+  var now=new Date();
+  var md=String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  return getSpesial().filter(s=>s.md===md);
+}
+/* ===== END TANGGAL SPESIAL ===== */
+
+// ===== TEMA OTOMATIS TIAP BULAN (12 BULAN) =====
+function getTemaBulanan(bulan){
+  if(!bulan) bulan = new Date().getMonth()+1;
+  var temas = {
+    1:  {nama:"Januari - Tahun Baru", bg1:"#d6eeff", bg2:"#f0f9ff", p:"#0284c7", d:"#0369a1", emoji:["❄️","🎊","✨"], desc:"Semangat awal tahun!"},
+    2:  {nama:"Februari - Kasih Sayang", bg1:"#ffe0e9", bg2:"#fff0f5", p:"#e11d48", d:"#be123c", emoji:["💖","💝","🌹"], desc:"Bulan penuh cinta"},
+    3:  {nama:"Maret - Semi Ceria", bg1:"#dcfce7", bg2:"#f0fdf4", p:"#16a34a", d:"#15803d", emoji:["🌸","🌱","🦋"], desc:"Musim semi bersemi"},
+    4:  {nama:"April - Hujan Berkah", bg1:"#dbeafe", bg2:"#eff6ff", p:"#2563eb", d:"#1d4ed8", emoji:["🌧️","🌈","☔"], desc:"Hujan membawa berkah"},
+    5:  {nama:"Mei - Bunga Mekar", bg1:"#fae8ff", bg2:"#fdf4ff", p:"#9333ea", d:"#7e22ce", emoji:["🌺","🌷","💐"], desc:"Bunga bermekaran"},
+    6:  {nama:"Juni - Ceria Liburan", bg1:"#fef9c3", bg2:"#fefce8", p:"#ca8a04", d:"#a16207", emoji:["☀️","🏖️","🍉"], desc:"Liburan ceria"},
+    7:  {nama:"Juli - Semangat Merdeka", bg1:"#ffedd5", bg2:"#fff7ed", p:"#ea580c", d:"#c2410c", emoji:["🔥","🌟","🎯"], desc:"Semangat membara"},
+    8:  {nama:"Agustus - Merah Putih", bg1:"#fee2e2", bg2:"#fff5f5", p:"#dc2626", d:"#b91c1c", emoji:["🇮🇩","❤️","🤍"], desc:"Dirgahayu RI!"},
+    9:  {nama:"September - Kembali Semangat", bg1:"#ffedd5", bg2:"#fff7ed", p:"#d97706", d:"#b45309", emoji:["📚","🍂","🎒"], desc:"Semangat baru"},
+    10: {nama:"Oktober - Halloween Ceria", bg1:"#fed7aa", bg2:"#fff7ed", p:"#ea580c", d:"#9a3412", emoji:["🎃","👻","🍁"], desc:"Musim gugur"},
+    11: {nama:"November - Pahlawan", bg1:"#e0e7ff", bg2:"#eef2ff", p:"#4f46e5", d:"#4338ca", emoji:["🎖️","⭐","🇮🇩"], desc:"Hari Pahlawan"},
+    12: {nama:"Desember - Natal & Tahun Baru", bg1:"#dcfce7", bg2:"#fef2f2", p:"#dc2626", d:"#15803d", emoji:["🎄","🎅","🎁"], desc:"Damai Natal & Tahun Baru"}
+  };
+  return temas[bulan] || temas[1];
+}
+
+function terapkanTemaBulanan(){
+  try{
+    // Jika ada hari raya, tema bulanan tidak override (hari raya prioritas)
+    if(typeof cekHariRaya==='function' && cekHariRaya()){
+      return;
+    }
+    var now = new Date();
+    var bulan = now.getMonth()+1;
+    var t = getTemaBulanan(bulan);
+    
+    // Simpan tema aktif
+    localStorage.setItem('kas-ef-tema-bulan', bulan);
+    
+    // Apply background body
+    document.body.style.background = `linear-gradient(180deg, ${t.bg1} 0%, ${t.bg2} 100%)`;
+    document.body.classList.add('tema-transition');
+    
+    // Apply theme-color meta
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.content = t.p;
+    
+    // Apply logo & primary colors via CSS variables
+    var style = document.getElementById('styleTemaBulanan');
+    if(!style){
+      style = document.createElement('style');
+      style.id='styleTemaBulanan';
+      document.head.appendChild(style);
+    }
+    style.textContent = `
+      .logo{color:${t.p} !important}
+      .btn{color:${t.p} !important; border-color:${t.p}22 !important}
+      .btn-pdf{background:linear-gradient(135deg,${t.p},${t.d}) !important}
+      .card{border-color:${t.p}11 !important}
+      .bank-chip{border-color:${t.p}11 !important}
+      .h{color:${t.p} !important}
+      .top{border-bottom-color:${t.p}14 !important}
+      .sel{border-color:${t.p}22 !important}
+      .filter-label{color:${t.p} !important}
+      .period-selector{border-color:${t.p}14 !important; background:${t.bg1}88 !important}
+      .admin{border-color:${t.p}14 !important}
+      .tabs button.active{background:${t.p} !important; border-color:${t.p} !important}
+      .btnSave.green{background:linear-gradient(135deg,${t.p},${t.d}) !important}
+    `;
+    
+    // Tampilkan banner bulanan (jika belum ada banner hari raya)
+    var areaRaya = document.getElementById('areaHariRaya');
+    var existingBannerBulanan = document.querySelector('.banner-bulanan');
+    if(existingBannerBulanan) existingBannerBulanan.remove();
+    
+    if(areaRaya && !document.querySelector('.banner-raya')){
+      var banner = document.createElement('div');
+      banner.className='banner-bulanan';
+      banner.style.background=`linear-gradient(135deg,${t.p},${t.d})`;
+      banner.innerHTML=`<span style="font-size:18px">${t.emoji[0]}</span> <span>${t.nama}</span> <span style="font-size:11px; opacity:.9; font-weight:600">• ${t.desc}</span>`;
+      areaRaya.appendChild(banner);
+    }
+    
+    // Emoji jatuh sesuai bulan (ringan)
+    if(Math.random()<0.3){ // 30% chance pas load
+      setTimeout(()=>jatuhkanEmojiBulanan(t.emoji), 800);
+    }
+    
+    console.log('Tema bulanan diterapkan:', t.nama);
+  }catch(e){ console.log('tema bulanan error', e); }
+}
+
+function jatuhkanEmojiBulanan(emojis){
+  try{
+    for(var i=0;i<6;i++){
+      setTimeout(function(){
+        var span=document.createElement('div');
+        span.className='emoji-bulanan';
+        span.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        span.style.left=Math.random()*100+'vw';
+        span.style.fontSize=(16+Math.random()*14)+'px';
+        span.style.animationDuration=(4+Math.random()*4)+'s';
+        document.body.appendChild(span);
+        setTimeout(()=>{ if(span.parentNode) span.remove(); }, 8000);
+      }, i*400);
+    }
+  }catch(e){}
+}
+
+function cekGantiBulanOtomatis(){
+  var lastBulan = localStorage.getItem('kas-ef-tema-bulan');
+  var nowBulan = new Date().getMonth()+1;
+  if(lastBulan && parseInt(lastBulan)!==nowBulan){
+    // Bulan ganti! Terapkan tema baru + notif
+    setTimeout(()=>{
+      terapkanTemaBulanan();
+      toast('🎨 Tema baru: '+getTemaBulanan(nowBulan).nama+' ✨');
+      jatuhkanEmojiBulanan(getTemaBulanan(nowBulan).emoji);
+    }, 1500);
+  }
+}
+
+terapkanTemaRaya();
+
+notifTanggalMerah();
+function bannerSpesial(){
+  try{
+    var arr=(typeof cekTanggalSpesial==='function')?cekTanggalSpesial():[];
+    if(!arr.length) return;
+    var top=document.querySelector('.top');
+    if(!top||document.querySelector('.banner-spesial')) return;
+    var b=document.createElement('div');
+    b.className='banner-raya banner-spesial';
+    b.style.background='linear-gradient(135deg,#ff9f43,#e67e22)';
+    b.innerHTML=arr.map(s=>`${s.emoji||'🎉'} <b>${s.nama}</b><br><span style="font-size:11px;font-weight:600">${s.ucapan}</span>`).join('<br><br>');
+        var area = document.getElementById('areaHariRaya');
+    if(area) area.appendChild(b); else var area2=document.getElementById('areaHariRaya'); if(area2) area2.appendChild(b); else top.insertAdjacentElement('afterend', b);
+  }catch(e){}
+}
+bannerSpesial();
+notifWAHariRayaOtomatis();
+
+function notifWAHariRayaOtomatis(){
+  try{
+    var t = (typeof cekHariRaya==='function') ? cekHariRaya() : null;
+    if(!t) return;
+    var today = new Date().toISOString().slice(0,10);
+    var key = 'kas-ef-notif-wa-'+t.key+'-'+today;
+    if(localStorage.getItem(key)) return; // sudah notif hari ini
+
+    // tunggu 1.5 detik biar UI siap
+    setTimeout(function(){
+      var ucapanPlain = '';
+      try{ ucapanPlain = stripHtml(t.ucapan(t.now)); }catch(e){ ucapanPlain = 'Selamat Hari Raya'; }
+      var tglStr = '';
+      try{ tglStr = t.now.toLocaleDateString('id-ID',{weekday:'long', day:'numeric', month:'long', year:'numeric'}); }catch(e){}
+
+      // buat modal notif
+      if(document.getElementById('modalHariRayaWA')) return;
+      var modal = document.createElement('div');
+      modal.id='modalHariRayaWA';
+      modal.style.cssText='position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(10px); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn .4s';
+      var pernakEmoji = (t.pernak||['🎉'])[0];
+      modal.innerHTML = `
+        <div style="background:#fff; border-radius:24px; padding:22px; width:100%; max-width:360px; box-shadow:0 20px 60px rgba(0,0,0,.25); text-align:center; position:relative; overflow:hidden; border:2px solid ${t.p}22">
+          <div style="position:absolute; inset:0; background:linear-gradient(135deg,${t.bg1},${t.bg2}); opacity:0.5; pointer-events:none"></div>
+          <div style="position:relative; z-index:1">
+            <div style="font-size:48px; margin-bottom:8px">${pernakEmoji}</div>
+            <div style="font-weight:900; font-size:16px; color:${t.p}; line-height:1.3">${t.ucapan(t.now)}</div>
+            <div style="font-size:11px; color:#6b8fa8; margin-top:6px; font-weight:600">📅 ${tglStr}</div>
+            <div style="background:${t.bg1}; border:1px solid ${t.p}14; border-radius:14px; padding:12px; margin-top:14px; text-align:left">
+              <div style="font-size:10px; font-weight:800; color:${t.p}; text-transform:uppercase; margin-bottom:6px">📲 Notif WA Otomatis</div>
+              <div style="font-size:11px; color:#0a2540; line-height:1.4">Kirim ucapan <b>${ucapanPlain}</b> + laporan kas ke grup WA secara otomatis?</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px">
+              <button onclick="document.getElementById('modalHariRayaWA').remove()" style="border:1px solid rgba(0,0,0,.1); background:#fff; border-radius:999px; padding:12px; font-weight:700; font-size:12px; cursor:pointer">Nanti</button>
+              <button onclick="kirimWAOtomatisHariRaya()" style="border:none; background:linear-gradient(135deg,${t.p},${t.d}); color:#fff; border-radius:999px; padding:12px; font-weight:800; font-size:12px; cursor:pointer; box-shadow:0 6px 16px ${t.p}44">📲 Kirim WA</button>
+            </div>
+            <div style="font-size:9px; color:#8aa8be; margin-top:10px">Otomatis 1x per hari raya • Bisa dimatikan di Admin</div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      // getaran + sound
+      try{ if(navigator.vibrate) navigator.vibrate([200,100,200]); }catch(e){}
+    }, 1500);
+  }catch(e){ console.log('notif WA raya error', e); }
+}
+
+function kirimWAOtomatisHariRaya(){
+  try{
+    var t = cekHariRaya();
+    var today = new Date().toISOString().slice(0,10);
+    if(t){
+      var key = 'kas-ef-notif-wa-'+t.key+'-'+today;
+      localStorage.setItem(key, '1');
+    }
+    var modal = document.getElementById('modalHariRayaWA');
+    if(modal) modal.remove();
+    // pakai fungsi shareWA yang sudah ada (sudah include ucapan hari raya + tanggal)
+    if(typeof shareWA==='function'){
+      shareWA();
+      toast('Membuka WA Grup 🎉');
+    }else{
+      var txt = (typeof getShareText==='function') ? getShareText() : 'Selamat Hari Raya!';
+      var url = 'https://wa.me/?text='+encodeURIComponent(txt);
+      window.open(url, '_blank');
+    }
+  }catch(e){
+    console.log(e);
+    if(typeof shareWA==='function') shareWA();
+  }
+}
+
+// fungsi untuk test manual dari console
+function saveWAAPI(){
+  var data = {
+    url: document.getElementById('waApiUrl').value.trim(),
+    token: document.getElementById('waApiToken').value.trim(),
+    target: document.getElementById('waApiTarget').value.trim(),
+    jam: document.getElementById('waApiJam').value,
+    aktif: document.getElementById('waApiAktif').checked,
+    hariRayaSaja: document.getElementById('waApiHariRayaSaja').checked
+  };
+  localStorage.setItem('kas-ef-wa-api', JSON.stringify(data));
+  toast('WA API disimpan ✓');
+  renderWAAPI();
+}
+
+function loadWAAPI(){
+  try{
+    var s = localStorage.getItem('kas-ef-wa-api');
+    if(!s) return null;
+    return JSON.parse(s);
+  }catch(e){ return null; }
+}
+
+function renderWAAPI(){
+  var d = loadWAAPI();
+  if(!d) return;
+  var elUrl=document.getElementById('waApiUrl'); if(elUrl) elUrl.value=d.url||'';
+  var elToken=document.getElementById('waApiToken'); if(elToken) elToken.value=d.token||'';
+  var elTarget=document.getElementById('waApiTarget'); if(elTarget) elTarget.value=d.target||'';
+  var elJam=document.getElementById('waApiJam'); if(elJam) elJam.value=d.jam||'7';
+  var elAktif=document.getElementById('waApiAktif'); if(elAktif) elAktif.checked = d.aktif!==false;
+  var elHari=document.getElementById('waApiHariRayaSaja'); if(elHari) elHari.checked = d.hariRayaSaja!==false;
+}
+
+function logWAAPI(msg){
+  var el=document.getElementById('waApiLog');
+  if(!el) return;
+  el.style.display='block';
+  var time=new Date().toLocaleTimeString('id-ID');
+  el.innerHTML = '['+time+'] '+msg+'<br>'+el.innerHTML;
+}
+
+async function kirimViaWAAPI(text){
+  var cfg = loadWAAPI();
+  if(!cfg || !cfg.url || !cfg.token || !cfg.target){
+    logWAAPI('❌ API belum lengkap, skip full-auto, pakai manual WA');
+    return false;
+  }
+  if(cfg.aktif===false){
+    logWAAPI('⏸️ Auto API nonaktif');
+    return false;
+  }
+  try{
+    logWAAPI('🚀 Kirim via API ke '+cfg.target.substring(0,15)+'...');
+    var payload = {};
+    var headers = {'Content-Type':'application/json'};
+
+    // Deteksi Fonnte
+    if(cfg.url.includes('fonnte.com')){
+      headers['Authorization']=cfg.token;
+      payload = {target: cfg.target, message: text};
+    } else if(cfg.url.includes('wablas')){
+      // Wablas
+      headers['Authorization']=cfg.token;
+      payload = {phone: cfg.target, message: text};
+    } else {
+      // Generic
+      headers['Authorization']='Bearer '+cfg.token;
+      payload = {target: cfg.target, phone: cfg.target, message: text, text: text};
+    }
+
+    var res = await fetch(cfg.url, {method:'POST', headers: headers, body: JSON.stringify(payload)});
+    var j = await res.text();
+    logWAAPI('✅ Response: '+j.substring(0,200));
+    toast('WA terkirim otomatis via API ✓');
+    return true;
+  }catch(e){
+    logWAAPI('❌ Error API: '+e.message);
+    toast('Gagal API, coba manual');
+    return false;
+  }
+}
+
+function testGratisWA(){
+  var txt = (typeof getShareText==='function') ? getShareText() : 'Test WA Gratis KAS EF';
+  var url = 'https://wa.me/?text='+encodeURIComponent(txt);
+  window.open(url, '_blank');
+  toast('WA Gratis dibuka - tinggal Kirim ✓');
+  logWAAPI('🆓 Gratis WA dibuka: '+url.substring(0,60));
+}
+
+function saveCallMeBot(){
+  var data = {
+    phone: document.getElementById('callmebotPhone').value.trim(),
+    apikey: document.getElementById('callmebotApikey').value.trim()
+  };
+  localStorage.setItem('kas-ef-callmebot', JSON.stringify(data));
+  toast('CallMeBot disimpan ✓');
+}
+
+function loadCallMeBot(){
+  try{ return JSON.parse(localStorage.getItem('kas-ef-callmebot')||'null'); }catch(e){ return null; }
+}
+
+async function testCallMeBot(){
+  var cfg = loadCallMeBot();
+  if(!cfg || !cfg.phone || !cfg.apikey){ toast('Isi Phone & Apikey CallMeBot dulu'); return; }
+  var txt = (typeof getShareText==='function') ? getShareText() : 'Test CallMeBot';
+  try{
+    logWAAPI('📲 CallMeBot kirim ke '+cfg.phone);
+    var url = `https://api.callmebot.com/whatsapp.php?phone=${cfg.phone}&text=${encodeURIComponent(txt)}&apikey=${cfg.apikey}`;
+    // CallMeBot butuh via fetch (CORS kadang blokir, jadi pakai img trick)
+    var res = await fetch(url);
+    var t = await res.text();
+    logWAAPI('✅ CallMeBot: '+t.substring(0,150));
+    toast('CallMeBot terkirim ✓');
+  }catch(e){
+    logWAAPI('❌ CallMeBot error: '+e.message+' - coba buka manual');
+    // fallback buka URL
+    window.open(`https://api.callmebot.com/whatsapp.php?phone=${cfg.phone}&text=${encodeURIComponent(txt)}&apikey=${cfg.apikey}`, '_blank');
+  }
+}
+
+async function kirimGratisOtomatis(){
+  // Mode gratis utama: buka wa.me otomatis jam 7
+  var cfg = loadWAAPI();
+  // jika mode gratis (tidak ada url API) atau jam cocok
+  var today = new Date().toISOString().slice(0,10);
+  if(localStorage.getItem('kas-ef-gratis-wa-sent-'+today)) return false;
+
+  // coba CallMeBot dulu jika ada
+  var cb = loadCallMeBot();
+  if(cb && cb.phone && cb.apikey){
+    var txt = (typeof getShareText==='function') ? getShareText() : 'Selamat Hari Raya!';
+    try{
+      var url = `https://api.callmebot.com/whatsapp.php?phone=${cb.phone}&text=${encodeURIComponent(txt)}&apikey=${cb.apikey}`;
+      await fetch(url, {mode:'no-cors'});
+      localStorage.setItem('kas-ef-gratis-wa-sent-'+today, '1');
+      logWAAPI('🆓 Gratis CallMeBot terkirim jam 07:00');
+      return true;
+    }catch(e){}
+  }
+
+  // fallback: auto-open wa.me (gratis 100%)
+  var txt2 = (typeof getShareText==='function') ? getShareText() : 'Selamat Hari Raya!';
+  var waUrl = 'https://wa.me/?text='+encodeURIComponent(txt2);
+  localStorage.setItem('kas-ef-gratis-wa-sent-'+today, '1');
+  logWAAPI('🆓 Gratis WA Auto-Open: '+waUrl.substring(0,50));
+  // auto open
+  window.open(waUrl, '_blank');
+  return true;
+}
+
+async function testWAAPI(){
+  var txt = (typeof getShareText==='function') ? getShareText() : 'Test WA API KAS EF';
+  logWAAPI('🧪 Test kirim...');
+  var ok = await kirimViaWAAPI(txt);
+  if(!ok){
+    // fallback manual
+    if(confirm('API belum dikonfigurasi / gagal. Buka WA manual?')){
+      shareWA();
+    }
+  }
+}
+
+async function kirimWAOtomatisFullAPI(){
+  var cfg = loadWAAPI();
+  var t = (typeof cekHariRaya==='function') ? cekHariRaya() : null;
+  var isHariRaya = !!t;
+
+  if(cfg && cfg.hariRayaSaja && !isHariRaya){
+    console.log('Bukan hari raya, skip auto API');
+    return;
+  }
+
+  var text = (typeof getShareText==='function') ? getShareText() : 'Selamat Hari Raya!';
+  var sent = await kirimViaWAAPI(text);
+  if(sent){
+    var today = new Date().toISOString().slice(0,10);
+    localStorage.setItem('kas-ef-auto-wa-api-sent-'+today, '1');
+  }
+}
+
+function testNotifWAHariRaya(){
+  localStorage.clear();
+  sessionStorage.clear();
+  notifWAHariRayaOtomatis();
+}
+
+// === JADWAL OTOMATIS JAM 07:00 JIKA HARI RAYA ===
+function jadwalOtomatisJam7(){
+  try{
+    // cek apakah user aktifkan auto jam 7
+    var aktif = localStorage.getItem('kas-ef-auto-wa-jam7') !== '0'; // default aktif
+    if(!aktif) return;
+
+    var t = (typeof cekHariRaya==='function') ? cekHariRaya() : null;
+    if(!t) return; // bukan hari raya, skip
+
+    var now = new Date();
+    var today = now.toISOString().slice(0,10);
+    var keyJam7 = 'kas-ef-auto-wa-jam7-sent-'+today;
+
+    // jika sudah terkirim hari ini, skip
+    if(localStorage.getItem(keyJam7)) return;
+
+    // jika jam sekarang sudah lewat jam 7 pagi, kirim notif
+    var jam = now.getHours();
+    if(jam >= 7){
+      // tandai sudah cek hari ini biar tidak spam
+      localStorage.setItem(keyJam7, '1');
+      // coba kirim full otomatis: gratis dulu, baru API berbayar
+      (async function(){
+        var today = new Date().toISOString().slice(0,10);
+        var cfg = loadWAAPI();
+        var jamSetting = cfg ? cfg.jam : '7';
+        var isJamCocok = (jamSetting==='7' && new Date().getHours()>=7) || (jamSetting==='0') || (parseInt(jamSetting)===new Date().getHours());
+
+        // 1. Coba API berbayar jika ada & jam cocok
+        if(cfg && cfg.url && isJamCocok){
+          if(!localStorage.getItem('kas-ef-auto-wa-api-sent-'+today)){
+            var ok = await kirimWAOtomatisFullAPI();
+            if(ok) return;
+          }
+        }
+
+        // 2. Coba gratis (CallMeBot / auto-open wa.me) - GRATIS 100%
+        if(isJamCocok && !localStorage.getItem('kas-ef-gratis-wa-sent-'+today)){
+          var okGratis = await kirimGratisOtomatis();
+          if(okGratis) {
+            // jika gratis CallMeBot berhasil, tidak perlu modal
+            // jika auto-open wa.me, tetap tampilkan modal konfirmasi
+            var cb = loadCallMeBot();
+            if(cb && cb.phone) return;
+          }
+        }
+
+        // 3. Fallback tampilkan modal manual
+        setTimeout(function(){
+          notifWAHariRayaOtomatisJam7(t);
+        }, 1500);
+      })();
+    }
+  }catch(e){ console.log('jadwal jam7 error', e); }
+}
+
+function notifWAHariRayaOtomatisJam7(t){
+  try{
+    if(document.getElementById('modalHariRayaWA')) return;
+    var tglStr = '';
+    try{ tglStr = t.now.toLocaleDateString('id-ID',{weekday:'long', day:'numeric', month:'long', year:'numeric'}); }catch(e){}
+    var ucapanPlain = '';
+    try{ ucapanPlain = stripHtml(t.ucapan(t.now)); }catch(e){ ucapanPlain = 'Selamat Hari Raya'; }
+
+    var modal = document.createElement('div');
+    modal.id='modalHariRayaWA';
+    modal.style.cssText='position:fixed; inset:0; background:rgba(0,0,0,.5); backdrop-filter:blur(12px); z-index:101; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn .4s';
+    modal.innerHTML = `
+      <div style="background:#fff; border-radius:24px; padding:22px; width:100%; max-width:360px; box-shadow:0 20px 60px rgba(0,0,0,.3); text-align:center; position:relative; overflow:hidden; border:2px solid ${t.p}22">
+        <div style="position:absolute; inset:0; background:linear-gradient(135deg,${t.bg1},${t.bg2}); opacity:0.6; pointer-events:none"></div>
+        <div style="position:relative; z-index:1">
+          <div style="display:inline-flex; align-items:center; gap:6px; background:${t.p}; color:#fff; padding:4px 12px; border-radius:999px; font-size:10px; font-weight:800; margin-bottom:10px">⏰ JAM 07:00 OTOMATIS</div>
+          <div style="font-size:44px; margin-bottom:8px">${(t.pernak||['🎉'])[0]}</div>
+          <div style="font-weight:900; font-size:16px; color:${t.p}; line-height:1.3">${t.ucapan(t.now)}</div>
+          <div style="font-size:11px; color:#6b8fa8; margin-top:6px; font-weight:600">📅 ${tglStr}</div>
+          <div style="background:#fff; border:1px solid ${t.p}22; border-radius:14px; padding:12px; margin-top:14px; text-align:left">
+            <div style="font-size:10px; font-weight:800; color:${t.p}; text-transform:uppercase; margin-bottom:6px">🤖 Auto Kirim Jam 07:00</div>
+            <div style="font-size:11px; color:#0a2540; line-height:1.4">Hari ini <b>${ucapanPlain}</b> terdeteksi!<br>WA Grup belum dikirim jam 07:00. Kirim sekarang?</div>
+            <div style="font-size:10px; color:#8aa8be; margin-top:6px">Tanpa buka aplikasi pun akan muncul notif jam 07:00 jika PWA terinstall</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px">
+            <button onclick="document.getElementById('modalHariRayaWA').remove()" style="border:1px solid rgba(0,0,0,.1); background:#fff; border-radius:999px; padding:12px; font-weight:700; font-size:12px; cursor:pointer">Tutup</button>
+            <button onclick="kirimWAOtomatisHariRaya()" style="border:none; background:linear-gradient(135deg,${t.p},${t.d}); color:#fff; border-radius:999px; padding:12px; font-weight:800; font-size:12px; cursor:pointer; box-shadow:0 6px 16px ${t.p}44">📲 Kirim WA</button>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:12px">
+            <button onclick="toggleAutoWAJam7()" style="flex:1; border:1px dashed ${t.p}44; background:${t.bg1}; border-radius:999px; padding:8px; font-size:10px; font-weight:700; color:${t.p}; cursor:pointer">🔕 Matikan Auto Jam 07:00</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    try{ if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]); }catch(e){}
+    try{ playRayaSound(t, false); }catch(e){}
+  }catch(e){ console.log(e); }
+}
+
+function toggleAutoWAJam7(){
+  var aktif = localStorage.getItem('kas-ef-auto-wa-jam7') !== '0';
+  if(aktif){
+    localStorage.setItem('kas-ef-auto-wa-jam7','0');
+    toast('Auto WA jam 07:00 dimatikan 🔕');
+  }else{
+    localStorage.removeItem('kas-ef-auto-wa-jam7');
+    toast('Auto WA jam 07:00 diaktifkan ⏰');
+  }
+  var m=document.getElementById('modalHariRayaWA');
+  if(m) m.remove();
+}
+
+// cek ganti bulan otomatis setiap jam
+setInterval(function(){
+  var now=new Date();
+  if(now.getDate()===1 && now.getHours()===0 && now.getMinutes()<=5){
+    terapkanTemaBulanan();
+    toast('🎨 Bulan baru! Tema '+getTemaBulanan().nama);
+  }
+  cekGantiBulanOtomatis();
+}, 3600000);
+
+// cek setiap menit apakah sudah jam 7
+setInterval(function(){
+  var now=new Date();
+  if(now.getHours()===7 && now.getMinutes()===0){
+    jadwalOtomatisJam7();
+  }
+}, 60000);
+
+function daftarCallMeBotOtomatis(){
+  var phone = prompt('Masukkan No WA kamu (format 628xxxx, contoh: 6281234567890):', '');
+  if(!phone) return;
+  phone = phone.replace(/[^0-9]/g,'');
+  if(!phone.startsWith('62')){ alert('Harus pakai 62, contoh: 62812xxxx'); return; }
+
+  // Simpan phone sementara
+  localStorage.setItem('kas-ef-temp-phone', phone);
+
+  // Step 1: Buka CallMeBot WhatsApp activation
+  var msg = 'I allow callmebot to send me messages';
+  var waUrl = 'https://wa.me/34644179436?text='+encodeURIComponent(msg);
+  
+  if(confirm('Langkah 1: Akan buka WhatsApp untuk kirim pesan aktivasi ke CallMeBot.\n\nPesan: "'+msg+'"\n\nKlik OK untuk lanjut')){
+    window.open(waUrl, '_blank');
+    setTimeout(function(){
+      if(confirm('Langkah 2: Setelah kirim pesan WA, bot akan balas API Key.\n\nSekarang buka website CallMeBot untuk lihat API Key?')){
+        window.open('https://www.callmebot.com/blog/free-api-whatsapp-messages/', '_blank');
+        setTimeout(function(){
+          var apikey = prompt('Langkah 3: Paste API Key yang dikasih bot CallMeBot di sini (angka 6 digit, contoh: 123456):', '');
+          if(apikey){
+            apikey = apikey.trim();
+            var data = {phone: phone, apikey: apikey};
+            localStorage.setItem('kas-ef-callmebot', JSON.stringify(data));
+            // isi form juga
+            var elPhone=document.getElementById('callmebotPhone'); if(elPhone) elPhone.value=phone;
+            var elKey=document.getElementById('callmebotApikey'); if(elKey) elKey.value=apikey;
+            toast('CallMeBot gratis terdaftar! API Key: '+apikey+' ✓');
+            logWAAPI('✅ CallMeBot terdaftar: '+phone+' - Key: '+apikey);
+            // test kirim
+            if(confirm('Mau test kirim WA gratis sekarang?')){
+              testCallMeBot();
+            }
+          }
+        }, 1000);
+      }
+    }, 800);
+  }
+}
+
+function ekstrakGroupID(){
+  var link = (document.getElementById('inputInviteLink').value||'').trim();
+  var hasil = document.getElementById('hasilEkstrak');
+  if(!link){ alert('Paste link invite grup dulu'); return; }
+  var code = '';
+  if(link.includes('chat.whatsapp.com/')){
+    code = link.split('chat.whatsapp.com/')[1].split('/')[0].split('?')[0].trim();
+  }
+  hasil.style.display='block';
+  if(code){
+    hasil.innerHTML = `
+      <div style="background:#fff; border:1px solid #0077b622; border-radius:10px; padding:10px">
+        <div style="font-size:10px; font-weight:800; color:#0077b6">✅ Link terdeteksi! Code: ${code}</div>
+        <div style="font-size:9px; color:#6b8fa8; margin-top:6px">Untuk Group ID lengkap butuh Fonnte berbayar. Gratis: pakai tombol Kirim ke Grup (pilih manual).</div>
+        <button onclick="kirimKeGrupWA(); document.getElementById('modalGroupID').remove()" style="width:100%; margin-top:8px; border:none; background:#00b894; color:#fff; border-radius:999px; padding:8px; font-weight:800; font-size:10px">👥 Kirim ke Grup (Gratis)</button>
+      </div>
+    `;
+    localStorage.setItem('kas-ef-group-invite-code', code);
+  }else{
+    hasil.innerHTML = '<div style="color:#ff6b6b; font-size:10px">❌ Link tidak valid. Harus https://chat.whatsapp.com/XXXX</div>';
+  }
+}
+function simpanGroupIDManual(){
+  var id = (document.getElementById('inputGroupIDManual').value||'').trim();
+  if(!id){ alert('Isi Group ID dulu'); return; }
+  localStorage.setItem('kas-ef-group-id', id);
+  var el=document.getElementById('groupIDTersimpan');
+  var txt=document.getElementById('textGroupIDTersimpan');
+  if(el && txt){ el.style.display='block'; txt.textContent=id; }
+  var cfg = loadWAAPI();
+  if(cfg){ cfg.target=id; localStorage.setItem('kas-ef-wa-api', JSON.stringify(cfg)); renderWAAPI(); }
+  toast('Group ID disimpan: '+id.substring(0,20)+'... ✓');
+}
+function cariGroupIDOtomatis(){
+  var modal = document.createElement('div');
+  modal.id='modalGroupID';
+  modal.style.cssText='position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(12px); z-index:103; display:flex; align-items:center; justify-content:center; padding:12px; overflow:auto';
+  modal.innerHTML = `
+    <div style="background:#fff; border-radius:20px; width:100%; max-width:420px; max-height:90vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <div style="padding:16px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#fff; z-index:2; border-radius:20px 20px 0 0">
+        <div style="font-weight:900; font-size:14px">🔍 Cari Group ID WA EF</div>
+        <button onclick="this.closest('#modalGroupID').remove()" style="border:none; background:#f1f1f1; width:32px; height:32px; border-radius:50%; font-weight:900; cursor:pointer">×</button>
+      </div>
+      <div style="padding:16px; display:flex; flex-direction:column; gap:14px">
+        <div style="background:#e0f7ff; border-radius:14px; padding:12px; border:2px solid #0077b622">
+          <div style="font-weight:800; font-size:12px; color:#0077b6">CARA 1: Via WhatsApp Web - 10 detik</div>
+          <div style="font-size:11px; margin-top:6px; line-height:1.5">1. Buka web.whatsapp.com di laptop<br>2. Buka Grup WA EF<br>3. Copy link invite: Info Grup → Undang via tautan</div>
+          <div style="display:flex; gap:8px; margin-top:10px">
+            <input id="inputInviteLink" class="inp" style="margin:0; flex:1; font-size:10px" placeholder="https://chat.whatsapp.com/...">
+            <button onclick="ekstrakGroupID()" style="border:none; background:#0077b6; color:#fff; border-radius:999px; padding:10px 14px; font-weight:800; font-size:10px; cursor:pointer">Ekstrak</button>
+          </div>
+          <div id="hasilEkstrak" style="margin-top:10px; display:none"></div>
+        </div>
+        <div style="background:#fff8e1; border-radius:14px; padding:12px">
+          <div style="font-weight:800; font-size:12px; color:#f57f17">Group ID Manual (untuk Fonnte berbayar)</div>
+          <div style="display:flex; gap:8px; margin-top:8px">
+            <input id="inputGroupIDManual" class="inp" style="margin:0; flex:1; font-size:10px" placeholder="1203630xxxx@g.us">
+            <button onclick="simpanGroupIDManual()" style="border:none; background:#00b894; color:#fff; border-radius:999px; padding:10px 14px; font-weight:800; font-size:10px">Simpan</button>
+          </div>
+        </div>
+        <div id="groupIDTersimpan" style="background:linear-gradient(135deg,#00b894,#0077b6); border-radius:14px; padding:12px; color:#fff; display:none">
+          <div style="font-weight:800; font-size:12px">✅ Group ID Tersimpan!</div>
+          <div id="textGroupIDTersimpan" style="font-family:monospace; background:rgba(255,255,255,.2); padding:6px 8px; border-radius:8px; margin-top:6px; font-size:11px; word-break:break-all"></div>
+        </div>
+        <button onclick="kirimKeGrupWA(); this.closest('#modalGroupID').remove()" style="border:none; background:#00b894; color:#fff; border-radius:999px; padding:12px; font-weight:800; font-size:11px; cursor:pointer">👥📲 Kirim ke Grup WA Sekarang (Gratis)</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  var saved = localStorage.getItem('kas-ef-group-id');
+  if(saved){
+    var el=document.getElementById('groupIDTersimpan');
+    var txt=document.getElementById('textGroupIDTersimpan');
+    if(el && txt){ el.style.display='block'; txt.textContent=saved; }
+    var inp=document.getElementById('inputGroupIDManual');
+    if(inp) inp.value=saved;
+  }
+}
+function showTutorialCallMeBot(){
+  if(document.getElementById('modalTutorial')) return;
+  var modal = document.createElement('div');
+  modal.id='modalTutorial';
+  modal.style.cssText='position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(12px); z-index:102; display:flex; align-items:center; justify-content:center; padding:12px; overflow:auto';
+  modal.innerHTML = `
+    <div style="background:#fff; border-radius:20px; width:100%; max-width:400px; max-height:90vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <div style="padding:16px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#fff; z-index:2; border-radius:20px 20px 0 0">
+        <div style="font-weight:900; font-size:14px">📚 Tutorial CallMeBot Gratis</div>
+        <button onclick="this.closest('#modalTutorial').remove()" style="border:none; background:#f1f1f1; width:32px; height:32px; border-radius:50%; font-weight:900; cursor:pointer">×</button>
+      </div>
+      <div style="padding:16px; display:flex; flex-direction:column; gap:16px">
+        
+        <div style="background:#e0f7ff; border-radius:14px; padding:12px">
+          <div style="font-weight:800; font-size:12px; color:#0077b6">LANGKAH 1: Buka Website</div>
+          <div style="font-size:11px; margin-top:4px; line-height:1.4">Buka browser HP, ketik <b>callmebot.com</b> → pilih <b>WhatsApp</b> di menu</div>
+          <div style="background:#fff; border-radius:10px; padding:8px; margin-top:8px; text-align:center; font-size:10px; color:#6b8fa8">🌐 callmebot.com → WhatsApp → Free API</div>
+        </div>
+
+        <div style="background:#e8f5e9; border-radius:14px; padding:12px">
+          <div style="font-weight:800; font-size:12px; color:#00b894">LANGKAH 2: Aktivasi Bot (WA)</div>
+          <div style="font-size:11px; margin-top:4px; line-height:1.4">Kamu akan diminta chat bot WhatsApp CallMeBot.<br>Kirim pesan:<br><b style="background:#fff; padding:2px 6px; border-radius:6px; display:inline-block; margin:2px 0">I allow callmebot to send me messages</b></div>
+          <div style="background:#fff; border-radius:10px; padding:8px; margin-top:8px; font-size:10px">
+            <div style="color:#00b894; font-weight:800">✅ Bot akan balas: API Key Aktif!</div>
+            <div style="font-family:monospace; background:#f1f8e9; padding:4px 8px; border-radius:6px; margin-top:4px">API KEY: 7F3D-A92B-KM19-QX54</div>
+          </div>
+        </div>
+
+        <div style="background:#f3e5f5; border-radius:14px; padding:12px">
+          <div style="font-weight:800; font-size:12px; color:#6a1b9a">LANGKAH 3: Copy API Key</div>
+          <div style="font-size:11px; margin-top:4px; line-height:1.4">Di website CallMeBot akan muncul <b>API Key kamu</b>.<br>Tap tombol <b>Copy</b> → simpan baik-baik!</div>
+          <div style="background:#fff; border-radius:10px; padding:8px; margin-top:8px; display:flex; gap:8px; align-items:center">
+            <div style="flex:1; font-family:monospace; background:#f3e5f5; padding:6px 8px; border-radius:8px; font-size:12px; font-weight:800">123456</div>
+            <div style="background:#0077b6; color:#fff; padding:6px 12px; border-radius:8px; font-size:10px; font-weight:800">📋 Copy</div>
+          </div>
+        </div>
+
+        <div style="background:#fff8e1; border-radius:14px; padding:12px">
+          <div style="font-weight:800; font-size:12px; color:#f57f17">LANGKAH 4: Paste di KAS EF</div>
+          <div style="font-size:11px; margin-top:4px; line-height:1.4">Buka KAS EF → Admin → 🤖 WA API<br>Isi:<br>• Phone: <b>628xxxx</b> (no WA kamu)<br>• Apikey: <b>paste dari CallMeBot</b></div>
+          <button onclick="document.getElementById('modalTutorial').remove(); document.getElementById('tAPI').click(); setTimeout(()=>{document.getElementById('pAPI').scrollIntoView({behavior:'smooth'})},200)" style="width:100%; margin-top:10px; border:none; background:#0077b6; color:#fff; border-radius:999px; padding:10px; font-weight:800; font-size:11px; cursor:pointer">📲 Buka Setting WA API</button>
+        </div>
+
+        <div style="background:linear-gradient(135deg,#00b894,#0077b6); border-radius:14px; padding:14px; color:#fff; text-align:center">
+          <div style="font-weight:900; font-size:13px">🎉 SELESAI! Gratis Selamanya</div>
+          <div style="font-size:11px; margin-top:4px; line-height:1.4">Sekarang jam 07:00 saat hari raya → otomatis terkirim tanpa klik!<br>Test dulu: <b>Test CallMeBot Gratis</b></div>
+        </div>
+
+        <div style="font-size:9px; color:#8aa8be; text-align:center">💡 Tips: Simpan API Key di catatan HP biar tidak hilang. CallMeBot 100% gratis <a onclick="showTutorialCallMeBot()" style="color:#0077b6; font-weight:800; cursor:pointer; text-decoration:underline">📚 Lihat Tutorial</a> tanpa kartu kredit.</div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+load(); init(); render(); renderMemberList(); renderWAAPI(); terapkanTemaBulanan(); cekGantiBulanOtomatis();
+// cek jadwal jam 7 saat load
+setTimeout(jadwalOtomatisJam7, 3000);
+setTimeout(function(){
+  // cek auto API jam 7 juga
+  var cfg = loadWAAPI();
+  if(cfg && cfg.jam==='0'){
+    // mode test - kirim sekarang jika hari raya
+    var t = (typeof cekHariRaya==='function') ? cekHariRaya() : null;
+    if(t) kirimWAOtomatisFullAPI();
+  }
+}, 4000);
+
+
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(r=>console.log('SW ok')).catch(e=>console.log(e));
+  });
+}
+let deferredPrompt;
+const installBtn = document.createElement('button');
+installBtn.textContent = '📲 Install KAS EF di HP';
+installBtn.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0077b6;color:#fff;padding:14px 22px;border-radius:999px;border:none;font-weight:800;z-index:100;display:none;box-shadow:0 8px 24px rgba(0,119,182,0.35)';
+document.body.appendChild(installBtn);
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt=e; installBtn.style.display='block'; });
+installBtn.addEventListener('click', async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const {outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted') installBtn.style.display='none';
+  deferredPrompt=null;
+});
+window.addEventListener('appinstalled', ()=>{ installBtn.style.display='none'; });
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
