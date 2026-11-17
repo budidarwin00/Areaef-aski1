@@ -67,7 +67,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-var MEMBERS=["Nia","Aditya","Anisa","Aaf","Syarif","Budi","Topik","Yudi","Heru","Dozen","Putri","Arief","Anah","Supriyadi","Zaelani","Nely","Eka"];
+var MEMBERS=["Nia","Aditya","Anisa","Aaf","Syarif","Budi","Topik","Yudi","Heru","Dozen","Putri","Arief","Anah","Supriyadi","Zaelani","Nely","Perdi","Eka"];
 var MAP={"opik":"Topik","neli":"Nely","nelly":"Nely","pak heru":"Heru","sisa":"Sisa saldo","sisa saldo":"Sisa saldo"};
 var MONTHS_ID=["januari","februari","maret","april","mei","juni","juli","agustus","september","oktober","november","desember"];
 function norm(n){ if(!n) return ""; var k=n.toLowerCase().trim().replace(/^pak\s+/,''); if(MAP[k]) return MAP[k]; for(var i=0;i<MEMBERS.length;i++){ if(MEMBERS[i].toLowerCase()===k) return MEMBERS[i]; } if(k==="test"||k==="contoh") return ""; if(k.toLowerCase().includes("sisa saldo")) return "Sisa saldo"; return n.charAt(0).toUpperCase()+n.slice(1).toLowerCase(); }
